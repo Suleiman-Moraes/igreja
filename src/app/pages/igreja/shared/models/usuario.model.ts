@@ -1,10 +1,4 @@
 import { BaseResourceModel } from 'src/app/shared/models/base-resource.model';
-import { Perfil } from '../../../security/shared/perfil.model';
-import { Telefone } from './telefone.model';
-import { Email } from './email.model';
-import { PessoaJuridica } from './pessoa-juridica.model';
-import { PessoaFisica } from './pessoa-fisica.model';
-import { Unidade } from './unidade.model.';
 
 export class Usuario extends BaseResourceModel{
     constructor(
@@ -16,12 +10,12 @@ export class Usuario extends BaseResourceModel{
         public matricula?: string,
         public usuarioInterno?: boolean,
         public senhaTemporaria?: boolean,
-        public telefone?: Telefone,
-        public email?: Email,
-        public pessoaJuridica?: PessoaJuridica,
-        public pessoaFisica?: PessoaFisica,
-        public unidade?: Unidade,
-        public perfis?: Perfil[],
+        public telefone?: any,
+        public email?: any,
+        public pessoaJuridica?: any,
+        public pessoaFisica?: any,
+        public unidade?: any,
+        public perfis?: any[],
         public dataInclusao?: Date,
         public vincularPessoa?: boolean
     ){

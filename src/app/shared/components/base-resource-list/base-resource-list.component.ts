@@ -7,7 +7,7 @@ import { MessageService } from 'primeng/api';
 import toastr from "toastr";
 import { Title } from '@angular/platform-browser';
 import { UserLogado } from 'src/app/pages/security/shared/user-logado.model';
-import { SituacaoEnum } from 'src/app/pages/divida-ativa/shared/enums/situacao.enum';
+import { SituacaoEnum } from 'src/app/pages/igreja/shared/enums/situacao.enum';
 
 export abstract class BaseResourceListComponent<T extends BaseResourceModel>{
 

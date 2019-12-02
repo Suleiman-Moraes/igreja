@@ -1,4 +1,3 @@
-import { CADU_CADASTROUNICO } from './../../divida-ativa/shared/dividaativa.api';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
@@ -9,7 +8,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class NotfoundComponent implements OnInit {
 
-  cadastroUnico = CADU_CADASTROUNICO;
+  cadastroUnico = 'home';
 
   constructor(
     private titleService: Title

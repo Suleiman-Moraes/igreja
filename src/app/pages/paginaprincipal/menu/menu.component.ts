@@ -1,12 +1,11 @@
-import { CADU_CADASTROUNICO, TRANSPORTE_NAO_REGULAR_HOST, FISCALIZACAO_LOGIN } from './../../divida-ativa/shared/dividaativa.api';
 import { AuthenticationService } from './../../security/shared/authentication-service.service';
 import { Component, OnInit } from '@angular/core';
 import { UserLogado } from '../../security/shared/user-logado.model';
 import * as $ from 'jquery';
 import { UserAuthenticationCadu } from '../../security/shared/user-authentication-cadu.model';
 import { Router } from '@angular/router';
-import { Usuario } from '../../divida-ativa/shared/models/usuario.model';
 import { MessageService } from 'primeng/api';
+import { Usuario } from '../../igreja/shared/models/usuario.model';
 
 @Component({
   selector: 'app-menu',
@@ -16,8 +15,7 @@ import { MessageService } from 'primeng/api';
 })
 export class MenuComponent implements OnInit {
 
-  cadastroUnico: string = CADU_CADASTROUNICO;
-  usuarioRouter: string = CADU_CADASTROUNICO + "/usuario";
+  cadastroUnico: string = 'home';
   
 
   currentUser: UserLogado = new UserLogado;
@@ -87,15 +85,6 @@ export class MenuComponent implements OnInit {
     return UserAuthenticationCadu.parseUsuario(this.currentUser);
   }
 
-  determinaUrlFiscalizacao(pagina: string) {
-    if (this.currentUser.user.usuarioInterno && (this.currentUser.user.matricula == null || this.currentUser.user.matricula == '')
-      && this.currentUser.user.login != 'root') {
-      this.showError("Usuário não possui matrícula.")
-      return;
-    }
-    window.location.href = `${FISCALIZACAO_LOGIN}/${this.currentUser.token}/logar/${pagina}`, '_blank';
-  }
-
   protected showError(detail: string) {
     this.messageService.add({ severity: 'error', summary: 'Erro', detail: detail });
   }
@@ -105,15 +94,6 @@ export class MenuComponent implements OnInit {
       this[per] = this.verificarPermissao(per);
     }
     return this[per];
-  }
-
-  determinaURL(pagina, modulo) {
-    if(modulo == 'FRETAMENTO'){
-      this.deslogar();
-      let urlTransporte = TRANSPORTE_NAO_REGULAR_HOST + "ModuloTransporte/autenticar/Autenticar.xhtml?pagina="+pagina;
-      $('#autenticarFretamento').attr('action', urlTransporte);
-      document.getElementById('postFretamento').click();
-    }
   }
 
   pesquisarMenu(): void{

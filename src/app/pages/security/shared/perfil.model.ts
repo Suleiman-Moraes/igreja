@@ -1,6 +1,4 @@
 import { BaseResourceModel } from 'src/app/shared/models/base-resource.model';
-import { Modulo } from '../../divida-ativa/shared/models/modulo.model';
-import { Permissao } from '../../divida-ativa/shared/models/permissao.model';
 
 export class Perfil extends BaseResourceModel{
     constructor(
@@ -9,8 +7,8 @@ export class Perfil extends BaseResourceModel{
         public apresentacao?: string,
         public tipoAcesso?: boolean,
         public ativo?: boolean,
-        public modulo?: Modulo,
-        public permissoes?: Permissao[]
+        public modulo?: any,
+        public permissoes?: any[]
     ){
         super();
     }

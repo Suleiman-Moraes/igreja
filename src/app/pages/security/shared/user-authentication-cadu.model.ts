@@ -1,6 +1,6 @@
 import { UserLogado } from './user-logado.model';
 import { Perfil } from './perfil.model';
-import { Usuario } from '../../divida-ativa/shared/models/usuario.model';
+import { Usuario } from '../../igreja/shared/models/usuario.model';
 
 export class UserAuthenticationCadu{
     constructor(

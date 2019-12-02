@@ -1,4 +1,3 @@
-import { CADU_CADASTROUNICO } from './../../../pages/divida-ativa/shared/dividaativa.api';
 import { Component, OnInit, Input } from '@angular/core';
 
 interface BreadCrumbItem{
@@ -15,7 +14,7 @@ export class BreadCrumbComponent implements OnInit {
 
   @Input() itens: Array<BreadCrumbItem> = [];
 
-  cadastroUnico = CADU_CADASTROUNICO;
+  cadastroUnico = 'home';
 
   constructor() { }
 

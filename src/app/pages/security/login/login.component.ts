@@ -1,4 +1,3 @@
-import { TRANSPORTE_MODULO_CONSULTACERTIFICADO } from './../../cadastrounico/shared/cadastrounico.api';
 import { Title } from '@angular/platform-browser';
 import { AuthenticationService } from './../shared/authentication-service.service';
 import { Component, OnInit } from '@angular/core';
@@ -7,8 +6,6 @@ import { Router } from '@angular/router';
 import { User } from '../shared/user.model';
 import { first } from 'rxjs/operators';
 import toastr from "toastr";
-import { PopUpService } from '../../cadastrounico/popup/shared/pop-up.service';
-import { PopUp } from '../../cadastrounico/shared/models/pop-up.model';
 
 @Component({
   selector: 'app-login',
@@ -44,7 +41,6 @@ export class LoginComponent implements OnInit {
   };
 
   constructor(
-    private popupService: PopUpService,
     private formBuilder: FormBuilder,
     private router: Router,
     private authenticationService: AuthenticationService,
@@ -54,7 +50,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.definirTituloEDescricao();
     this.loginForm = this.formBuilder.group({
       login: [null, Validators.required],
       password: [null, Validators.required]
@@ -88,10 +83,6 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  rcValidarCertificado(): void{
-    window.location.href = TRANSPORTE_MODULO_CONSULTACERTIFICADO;
-  }
-
   private actionsForError(error) {
     toastr.error(error, {
       "debug": false,
@@ -106,27 +97,6 @@ export class LoginComponent implements OnInit {
       "showMethod": "fadeIn",
       "hideMethod": "fadeOut"
     });
-  }
-
-  private definirTituloEDescricao(){
-    let aux : PopUp;
-    this.popupService.consultarPopupAtiva()
-    .subscribe(
-      responseApi => {
-        if(responseApi.data != null){
-          aux = responseApi.data;
-          this.titleModal = aux.titulo;
-          this.descricaoModal = aux.descricao;
-          if(this.descricaoModal.length > 2000)
-            this.tamanhoResponsivel = true;
-          else
-            this.tamanhoResponsivel = false;
-        }
-        else{
-          this.display = false;
-        }
-      }
-    );
   }
   
   getModalLarge(){

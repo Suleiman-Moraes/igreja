@@ -1,4 +1,3 @@
-import { CADU_LOGIN } from './pages/divida-ativa/shared/dividaativa.api';
 import { AuthenticationService } from './pages/security/shared/authentication-service.service';
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -62,6 +61,6 @@ export class AppComponent implements OnInit {
 
   private deslogarUsuario(): void{
     this.authenticationService.logout();
-    window.location.href = CADU_LOGIN;
+    // window.location.href = CADU_LOGIN; url de login
   }
 }

@@ -1,4 +1,3 @@
-import { CADU_CADASTROUNICO } from './../../divida-ativa/shared/dividaativa.api';
 import { UserLogado } from './../../security/shared/user-logado.model';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../security/shared/authentication-service.service';
@@ -13,7 +12,7 @@ export class HeaderComponent implements OnInit {
   private currentUserName: string = null;
   private currentUser: UserLogado = null;
   userLogin: string = '';
-  cadastroUnico: string = CADU_CADASTROUNICO;
+  cadastroUnico: string = 'home';
 
   constructor(
     private authenticationService: AuthenticationService

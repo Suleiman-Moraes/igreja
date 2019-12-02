@@ -1,4 +1,4 @@
-import { FINDBYPARAMSSINGLE, FINDBYPARAMSRELATORIO, DTO } from './../../pages/divida-ativa/shared/dividaativa.api';
+import { FINDBYPARAMSSINGLE, FINDBYPARAMSRELATORIO, DTO } from './../../pages/igreja/shared/igreja.api';
 import { ResponseApi } from './../models/response-api.model';
 import { BaseResourceModel } from 'src/app/shared/models/base-resource.model';
 import { HttpClient } from '@angular/common/http';
