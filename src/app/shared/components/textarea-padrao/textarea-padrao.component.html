@@ -1,0 +1,6 @@
+<form [formGroup]="resourceForm">
+  <label class="titleLabel"  [for]="forName">{{ nome }}</label>
+  <textarea [placeholder]="nome" rows="2" [title]="nome" type="text" class="form-control" [id]="forName"
+    [formControlName]="forName"></textarea>
+  <app-form-field-error [form-control]="resourceForm.get(forName)"></app-form-field-error>
+</form>

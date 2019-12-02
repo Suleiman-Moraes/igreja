@@ -1,0 +1,326 @@
+<aside class="main-sidebar" style="overflow: visible; font-family: sans-serif; background: white">
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="sidebar">
+    <!-- Sidebar user panel -->
+    <!-- search form -->
+    <form action="#" method="get" class="sidebar-form">
+    </form>
+    <!-- /.search form -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <form class="sidebar-form" id="sidebar-form" *ngIf="!senhaTemporaria">
+      <div class="input-group ml-3" style="width: 90%">
+        <input type="text" name="q" class="form-control" placeholder="Pesquisar..." id="search-input" 
+          onkeyup="document.getElementById('search-btn').click()">
+        <span class="input-group-btn">
+            <button type="button" name="search" id="search-btn" class="btn btn-flat" (click)="pesquisarMenu()">
+              <i class="fa fa-search"></i>
+            </button>
+        </span>
+      </div>
+    </form>
+    <ul class="sidebar-menu" data-widget="tree" *ngIf="!senhaTemporaria">
+      <li class="header text-center" style="background: white">Menu</li>
+      <li class="treeview" *ngIf="usuarioInterno">
+        <a href="#" style="background: white">
+          <i class="fa fa-edit"></i> <span style="font-size: 15px">Cadastro Único</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu" style="background: white">
+          <li><a [href]="getUrlLink('/empresa')" (click)="deslogar()" *ngIf="temPermissao('moduloCADU')" (click)="update('empresa')"><i class="fa fa-suitcase"></i> Empresa</a></li>
+          <li><a [href]="getUrlLink('/pessoafisica')" (click)="deslogar()" *ngIf="temPermissao('moduloCADU')" (click)="update('pessoa')"><i class="fa fa-user"></i> Pessoa</a></li>
+          <li class="treeview" *ngIf="temPermissao('moduloCADU')">
+            <a [href]="getUrlLink('/veiculo')">
+              <i (click)="redirect('/veiculo')" class="fa fa-bus"></i>
+              <a (click)="redirect('/veiculo')" href="#"> Veículo</a>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a [href]="getUrlLink('/veiculo/acessorio')" (click)="deslogar()"><i class="fa fa-tachometer"></i>Acessório</a></li>
+              <li><a [href]="getUrlLink('/veiculo/marca')" (click)="deslogar()"><i class="fa fa-circle-o"></i> Marca</a></li>
+              <li><a [href]="getUrlLink('/veiculo/modelo')" (click)="deslogar()"><i class="fa fa-circle-o"></i> Modelo</a></li>
+            </ul>
+          </li>
+          <li><a [href]="getUrlLink('/empresa/vistoriadora')" (click)="deslogar()" *ngIf="temPermissao('moduloCADU')" (click)="update('vistoriadora')"><i class="fa fa-suitcase"></i> Vistoriadora</a></li>
+          <li><a [href]="getUrlLink('/servico')" (click)="deslogar()" *ngIf="temPermissao('moduloCADU')"><i class="fa fa-wrench"></i> Serviço</a></li>
+          <li><a [href]="getUrlLink('/atividade')" (click)="deslogar()" *ngIf="temPermissao('moduloCADU')"><i class="fa fa-circle-o"></i> Atividade</a></li>
+          <li><a [href]="getUrlLink('/seguradora')" (click)="deslogar()" *ngIf="temPermissao('moduloCADU')"><i class="fa fa-shield"></i> Seguradora</a></li>
+          <li><a [href]="getUrlLink('/cidade')" (click)="deslogar()" *ngIf="temPermissao('moduloCADU')"><i class="fa fa-building"></i> Cidade/Distrito</a></li>
+          <li><a [href]="getUrlLink('/usuario')" (click)="deslogar()" *ngIf="currentUser.user.id != 1 && temPermissao('manterUSUARIO')"><i class="fa fa-users"></i> Usuário</a></li>
+
+          <!-- Somente for root -->
+          <li class="treeview" *ngIf="currentUser.user.id == 1">
+            <a href="#/cadastrounico/usuario">
+              <i (click)="redirect('/usuario')" class="fa fa-users"></i> 
+              <a (click)="redirect('/usuario')" href="#"> Usuário</a>
+              <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a [href]="getUrlLink('/usuario/perfil')" (click)="deslogar()"><i class="fa fa-circle-o"></i> Perfil</a></li>
+              <li><a [href]="getUrlLink('/usuario/permissao')" (click)="deslogar()"><i class="fa fa-unlock"></i> Permissão</a></li>
+            </ul>
+          </li>
+          <li *ngIf="currentUser.user.login == 'root'">
+            <a [href]="getUrlLink('/unidade')" (click)="deslogar()">
+            <img src="https://cdn0.iconfinder.com/data/icons/social-media-3/512/Website_Menu-512.png" width="19px" height="19px">
+             Unidade
+            </a>
+          </li>
+          <li *ngIf="currentUser.user.login == 'root'"><a [href]="getUrlLink('/popup')" (click)="deslogar()"><i class="fa fa-comment-o"></i> PopUp</a></li>
+          <li *ngIf="currentUser.user.login == 'root'"><a [href]="getUrlLink('/auditoria')" (click)="deslogar()"><i class="fa fa-user-secret"></i> Auditoria</a></li>
+          <!-- Somente for root -->
+          <li *ngIf="usuarioInterno && temPermissao('consultarDadosEmpresa')">
+            <a href="#/cadastrounico" (click)="determinaURL('/certificados/ListaDadosCertificadosEmpresa.xhtml', 'FRETAMENTO');"><i class="fa fa-file"></i> Certificado</a>
+          </li>
+          <li class="treeview" *ngIf="temPermissao('moduloCADU')">
+            <a [href]="getUrlLink('/relatorio')" (click)="deslogar()"><i class="fa fa-file-text-o"></i> Relatório
+              <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a [href]="getUrlLink('/relatorio/pessoa')" (click)="deslogar()" ><i class="fa fa-file-text"></i> Pessoa</a></li>
+              <li><a [href]="getUrlLink('/relatorio/empresa')" (click)="deslogar()" ><i class="fa fa-file-text"></i> Empresa</a></li>
+              <li><a [href]="getUrlLink('/relatorio/veiculo')" (click)="deslogar()" ><i class="fa fa-file-text"></i> Veículo</a></li>
+              <li><a [href]="getUrlLink('/relatorio/baixaveiculo')" (click)="deslogar()" ><i class="fa fa-file-text"></i> Baixa Veículo</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+
+      <li class="treeview" *ngIf="!usuarioInterno">
+        <!-- CADU EXTERNO -->
+        <a href="#" style="background: white">
+          <i class="fa fa-edit"></i> <span style="font-size: 15px">Cadastro Único</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu" style="background: white">
+          <li><a [href]="getUrlLink('/empresa/dados')" (click)="deslogar()" ><i class="fa fa-briefcase"></i> Informações do Cadastro</a></li>
+          <li><a [href]="getUrlLink('/empresa/enviodocumentacao')" (click)="deslogar()" ><i class="fa fa-comment-o"></i> Enviar Documentação</a></li>
+          <li *ngIf="getPermissaoVeiculo"><a [href]="getUrlLink('/veiculo')" (click)="deslogar()"><i class="fa fa-bus"></i> Veículo</a></li>
+          <li *ngIf="getVerificarPermissaoVistoriadora">
+            <!-- Sómente Vistoriadora -->
+            <a [href]="getUrlLink('/empresa/vistoriadora/crc')" (click)="deslogar()"><i class="fa fa-search"></i> CRC Vistoriadora</a>
+          </li>
+        </ul>
+      </li>
+      <li class="treeview" *ngIf="getPermissaoNaoRegular">
+        <a href="#" style="background: white">
+          <i class="fa fa-bus"></i> <span style="font-size: 15px">Transp. Não Regular</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu" style="background: white" *ngIf="currentUser != null">
+          <li *ngIf="usuarioInterno && (!getPermissaoConsultaNaoRegular || getPermissaoModuloNaoRegular)">
+            <a href="#/cadastrounico" (click)="determinaURL('/CRC/novoCRC.xhtml', 'FRETAMENTO');"><i class="fa fa-suitcase"></i> CRC</a>
+          </li>
+          <li *ngIf="!usuarioInterno">
+            <a href="#/cadastrounico" (click)="determinaURL('/CRC/imprimirCRC.xhtml', 'FRETAMENTO');"><i class="fa fa-suitcase"></i> CRC</a>
+          </li>
+          <li *ngIf="usuarioInterno && (!getPermissaoConsultaNaoRegular || getPermissaoModuloNaoRegular)">
+            <a href="#/cadastrounico" (click)="determinaURL('/CRV/veiculos/PesquisaVeiculoAdministrador.xhtml', 'FRETAMENTO');"><i class="fa fa-bus"></i> CRV</a>
+          </li>
+          <li *ngIf="!usuarioInterno">
+            <a href="#/cadastrounico" (click)="determinaURL('/CRV/MeusVeiculos.xhtml', 'FRETAMENTO');"><i class="fa fa-bus"></i> CRV</a>
+          </li>
+          <li *ngIf="usuarioInterno">
+            <a href="#/cadastrounico" (click)="determinaURL('/licenca/trechos/administrar.xhtml', 'FRETAMENTO');"><i class="fa fa-road"></i> Trecho</a>
+          </li>
+          <li *ngIf="usuarioInterno">
+            <a href="#/cadastrounico" (click)="determinaURL('/licenca/tarifas/administrar.xhtml', 'FRETAMENTO');"><i class="fa fa-wrench"></i> Tarifas</a>
+          </li>
+          <li *ngIf="usuarioInterno">
+            <a href="#/cadastrounico" (click)="determinaURL('/licenca/parametros/administrar.xhtml', 'FRETAMENTO');"><i class="fa fa-wrench"></i> Parâmetros</a>
+          </li>
+          <li *ngIf="(!getPermissaoConsultaNaoRegular || getPermissaoModuloNaoRegular)">
+            <a href="#/cadastrounico" (click)="determinaURL('/licenca/PesquisaLicencas.xhtml', 'FRETAMENTO');"><i class="fa fa-map-marker"></i> Licença de Viagem</a>
+          </li>
+          <li class="treeview" *ngIf="usuarioInterno">
+            <a href="#/cadastrounico/relatorio">
+              <i class="fa fa-file-text-o"></i> Relatório
+              <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="#/cadastrounico" (click)="determinaURL('/relatorios/relatorioEmpresaTransporte.xhtml', 'FRETAMENTO');"><i class="fa fa-file-text"></i> Empresas</a></li>
+              <li><a href="#/cadastrounico" (click)="determinaURL('/relatorios/relatorioCRC.xhtml', 'FRETAMENTO');"><i class="fa fa-file-text"></i> e-CRC</a></li>
+              <li><a href="#/cadastrounico" (click)="determinaURL('/relatorios/relatorioVeiculo.xhtml', 'FRETAMENTO');"><i class="fa fa-file-text"></i> Veículos</a></li>
+              <li><a href="#/cadastrounico" (click)="determinaURL('/relatorios/relatorioCRV.xhtml', 'FRETAMENTO');"><i class="fa fa-file-text"></i> e-CRV</a></li>
+              <li><a href="#/cadastrounico" (click)="determinaURL('/relatorios/relatorioLicenca.xhtml', 'FRETAMENTO');"><i class="fa fa-file-text"></i> Licença</a></li>
+              <li><a href="#/cadastrounico" (click)="determinaURL('/relatorios/relatorioDARE.xhtml', 'FRETAMENTO');"><i class="fa fa-file-text"></i> DARE´s</a></li>
+              <li class="treeview" *ngIf="usuarioInterno">
+                <a href="#/cadastrounico/relatorio">
+                  <i class="fa fa-file-text-o"></i> Sintético
+                  <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+                <ul class="treeview-menu">
+                  <li><a href="#/cadastrounico" (click)="determinaURL('/relatorios/relatorioSinteticoCRC.xhtml', 'FRETAMENTO');"><i class="fa fa-file-text"></i> e-CRC</a></li>
+                  <li><a href="#/cadastrounico" (click)="determinaURL('/relatorios/relatorioSinteticoCRV.xhtml', 'FRETAMENTO');"><i class="fa fa-file-text"></i> e-CRV</a></li>
+                  <li><a href="#/cadastrounico" (click)="determinaURL('/relatorios/relatorioSinteticoLicenca.xhtml', 'FRETAMENTO');"><i class="fa fa-file-text"></i> Licença</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="treeview" *ngIf="verificarPermissaoModuloRegular">
+        <a href="#" style="background: white">
+          <i class="fa fa-bus"></i> <span style="font-size: 15px"> Transp. Regular</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu" style="background: white" *ngIf="currentUser != null">
+          <li><a href="#/transporteregular/crv"><i class="fa fa-bus"></i> CRV</a></li>
+          <li class="treeview" *ngIf="temPermissao('moduloREGULARINTERNO')">
+          <!-- <li class="treeview" *ngIf="temPermissao('moduloREGULARINTERNO')"> -->
+            <a href="#/transporteregular/relatorio">
+              <i class="fa fa-file-text-o"></i> Relatório
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="#/transporteregular/relatorio/veiculo"><i class="fa fa-file-text"></i> Veículo</a></li>
+              <li><a href="#/transporteregular/relatorio/crv"><i class="fa fa-file-text"></i> CRV</a></li>
+              <li><a href="#/transporteregular/relatorio/dare"><i class="fa fa-file-text"></i> DARE</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="treeview" *ngIf="temPermissao('fiscalADMINISTRADOR') || temPermissao('fiscalFISCALIZACAO') || temPermissao('expediente')">
+        <a href="#" style="background: white">
+          <i class="fa fa-user-secret"></i> <span style="font-size: 15px">Fiscalização</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu" style="background: white" *ngIf="currentUser != null">
+          <li *ngIf="temPermissao('fiscalADMINISTRADOR') || temPermissao('fiscalFISCALIZACAO')"><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('abordagem');"><i class="fa fa-edit"></i> Abordagem</a></li>
+          <li *ngIf="temPermissao('fiscalADMINISTRADOR') || temPermissao('fiscalFISCALIZACAO')"><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('relatoriofiscalizacao');"><i class="fa fa-edit"></i> Relatório de Fiscalização</a></li>
+          <li><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('autoinfracao');"><i class="fa fa-edit"></i> Auto Infração</a></li>
+          <li *ngIf="temPermissao('fiscalADMINISTRADOR') || temPermissao('fiscalFISCALIZACAO')"><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('qualificacaopassageiro');"><i class="fa fa-edit"></i> Qualificação de Passageiros</a></li>
+          <li *ngIf="temPermissao('fiscalADMINISTRADOR') || temPermissao('fiscalFISCALIZACAO')"><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('declaracaopassageiro');"><i class="fa fa-edit"></i> Declaração de Passageiro</a></li>
+          <li *ngIf="temPermissao('fiscalADMINISTRADOR') || temPermissao('fiscalFISCALIZACAO')"><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('termoremocaoveiculo');"><i class="fa fa-edit"></i> Termo de Remoção de Veículo</a></li>
+          <li *ngIf="temPermissao('fiscalADMINISTRADOR') || temPermissao('fiscalFISCALIZACAO')"><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('relatoriocircunstanciado');"><i class="fa fa-edit"></i> Relatório Circunstanciado</a></li>
+          <li *ngIf="temPermissao('fiscalADMINISTRADOR') || temPermissao('fiscalFISCALIZACAO')"><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('termoliberacaoveiculo');"><i class="fa fa-edit"></i> Termo de Liberação de Veículo</a></li>
+          <li class="treeview" *ngIf="temPermissao('fiscalADMINISTRADOR')">
+            <a href="#/cadastrounico"><i (click)="determinaUrlFiscalizacao('leiresolucao');" class="fa fa-edit"></i><a (click)="determinaUrlFiscalizacao('leiresolucao');" href="#"> Leis e Resoluções</a>
+              <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('artigoinfracao');"><i class="fa fa-edit"></i> Artigos e Infrações</a></li>
+            </ul>
+          </li>
+          <li class="treeview" *ngIf="temPermissao('fiscalADMINISTRADOR') || temPermissao('fiscalFISCALIZACAO')">
+            <a href="#/cadastrounico/relatorio">
+              <i class="fa fa-file-text-o"></i> Relatório
+              <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('relatorioabordagemporcidade');"><i class="fa fa-file-text"></i> Abordagem por Cidade</a></li>
+              <li><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('relatorioabordagemporveiculo');"><i class="fa fa-file-text"></i> Abordagem por Veículo</a></li>
+              <li><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('relatorioautoinfracaoporempresa');"><i class="fa fa-file-text"></i> Auto de Infração Empresa</a></li>
+              <li><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('relatorioautoinfracaoporpercurso');"><i class="fa fa-file-text"></i> Auto de Infração Percurso</a></li>
+              <li><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('relatorioautoinfracaoporvalores');"><i class="fa fa-file-text"></i> Auto de Infração por Valores</a></li>
+              <li><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('relatorioempresa');"><i class="fa fa-file-text"></i> Empresa</a></li>
+              <li><a href="#/cadastrounico" (click)="determinaUrlFiscalizacao('relatorioleiresolucaoquantitativo');"><i class="fa fa-file-text"></i>Lei e Resolução Quantitativo</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="treeview">
+        <a href="#" style="background: white">
+          <i class="fa fa-edit"></i> <span style="font-size: 15px">Finanças e </span>
+          <span style="font-size: 15px">Dívida Ativa</span>
+          <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu" style="background: white">
+          <li *ngIf="(temPermissao('moduloFINANCAS') || temPermissao('moduloTRAMITE')) && currentUser.user.usuarioInterno"><a href="#/dividaativa/debito"><i class="fa fa-edit"></i> Créditos</a></li>
+          <li *ngIf="(temPermissao('moduloFINANCAS') || temPermissao('moduloTRAMITE')) && currentUser.user.usuarioInterno"><a href="#/dividaativa/debito/divida"><i class="fa fa-edit"></i> Créditos ápitos para<br>Inscrição em DA</a></li>
+          <li *ngIf="!currentUser.user.usuarioInterno"><a href="#/dividaativa/debito/externo"><i class="fa fa-edit"></i> Meus Créditos</a></li>
+          <li><a href="#/dividaativa/negociacao"><i class="fa fa-money"></i> Negociação</a></li>
+          <li><a href="#/dividaativa/negociacao/pilist"><i class="fa fa-money"></i> Pagamento Integral</a></li>
+          <li><a href="#/dividaativa/prazo"><i class="fa fa-edit"></i> Prazos</a></li>
+          <li *ngIf="temPermissao('manterPARAMETROS')"><a href="#/dividaativa/parametro"><i class="fa fa-edit"></i> Parâmetros</a></li>
+          <li *ngIf="temPermissao('manterPARAMETROS')"><a href="#/dividaativa/percentualreducao"><i class="fa fa-edit"></i> Percentual de Redução</a></li>
+          <li><a href="#/dividaativa/itemchecklist"><i class="fa fa-edit"></i> Itens do Checklist</a></li>
+          <li><a href="#/dividaativa/mensagempadrao"><i class="fa fa-edit"></i> Mensagem Padronizada</a></li>
+          <li><a href="#/dividaativa/situacaonotificacaotramite"><i class="fa fa-edit"></i> Notificação de Trâmite</a></li>
+          <li><a href="#/dividaativa/tipodebito"><i class="fa fa-edit"></i> Tipo do Crédito</a></li>
+          <li *ngIf="temPermissao('cadastrarIGPDI')"><a href="#/dividaativa/indiceigpdi"><i class="fa fa-edit"></i> Índice IGP-DI</a></li>
+          <li *ngIf="temPermissao('moduloFINANCAS')"><a href="#/dividaativa/areaatuacao"><i class="fa fa-edit"></i> Área de Atuação</a></li>
+          <li *ngIf="temPermissao('moduloFINANCAS')"><a href="#/dividaativa/codigoreceita"><i class="fa fa-edit"></i> Código Receita</a></li>
+          <li *ngIf="temPermissao('moduloFINANCAS')"><a href="#/dividaativa/dataferiado"><i class="fa fa-edit"></i> Data de Feriado</a></li>
+          <li *ngIf="temPermissao('moduloFINANCAS')"><a href="#/dividaativa/saldoremanescente"><i class="fa fa-edit"></i> Saldo Remanescente</a></li>
+        </ul>
+      </li>
+      <li class="treeview" *ngIf="(temPermissao('moduloTRAMITE') ) || currentUser.user.login == 'root'">
+        <a href="#" style="background: white">
+          <i class="fa fa-exchange"></i> <span style="font-size: 15px">Trâmite</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu" style="background: white" >
+          <li *ngIf="temPermissao('moduloTRAMITE')"><a href="#/dividaativa/debito/tramite"><i class="fa fa-edit"></i> Processos</a></li>
+        </ul>
+      </li>
+      <li class="treeview" *ngIf="currentUser != null && (temPermissao('execucaoFISCAL') || currentUser.user.login == 'root')">
+        <a href="#" style="background: white">
+          <i class=""> E</i> <span style="font-size: 15px">Execução Fiscal</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu" style="background: white" >
+          <li><a href="#/dividaativa/execucaofiscal" ><i class=""></i> Inscrito em Divida</a></li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+  <!-- /.sidebar -->
+</aside>
+
+<form
+  id="autenticarFretamento"
+  action=""
+  method="POST"
+  *ngIf="currentUser != null">
+  <input
+    id="j_username"
+    name="j_username"
+    type="hidden"
+    [value]="currentUser.user.login" > 
+  <input
+    id="j_password"
+    name="j_password"
+    type="hidden"
+    [value]="currentUser.user.senha" > 
+  <input
+    id="_spring_security_remember_me"
+    name="_spring_security_remember_me"
+    type="hidden"
+    value="" /> 
+  <input
+    id="usuario"
+    name="usuario"
+    type="hidden"
+    value="{{ usuarioAutenticacao | json }}">
+  <button
+    id="postFretamento"
+    type="submit"
+    style="display: none;"></button>
+</form>

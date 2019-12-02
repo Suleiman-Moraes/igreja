@@ -1,0 +1,105 @@
+<app-bread-crumb [itens]="[{text: 'Execução Fiscal', link: urlList}, {text: 'Visualizar'}]"></app-bread-crumb>
+<app-page-header page-title="Visualizar" button-text=" Voltar" [button-link]="urlList"
+  icon-lass="pi pi-angle-double-left" button-class="text-center" show-button="false">
+</app-page-header>
+
+<form [formGroup]="resourceForm" (submit)="submitForm()" style="font-size: .8rem;">
+  <!-- CARD DÉBITO -->
+  <div class="box card">
+    <div class="card-body"*ngIf="debito">
+      <h6><strong>Crédito</strong></h6>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Número do Processo</label>
+          <label title="Número do Processo" class="form-control readonlyLabel">{{ debito.numeroProcesso }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Lote</label>
+          <label title="Lote" class="form-control readonlyLabel">{{ debito.lote }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Caixa do Arquivo</label>
+          <label title="Caixa do Arquivo" class="form-control readonlyLabel">{{ debito.caixaArquivo }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Número do Auto Infração</label>
+          <label title="Número do Auto Infração" class="form-control readonlyLabel">{{ debito.numeroAutoInfracao }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Valor Original do Crédito</label>
+          <label title="Valor Original do Crédito" class="form-control readonlyLabel">{{ (debito.valor | maskMoney) }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Origem do Cadastro</label>
+          <label title="Origem do Cadastro" class="form-control readonlyLabel">{{ getOrigemCadastro(debito.origemCadastro) }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Tipo do Crédito</label>
+          <label title="Tipo do Crédito" class="form-control readonlyLabel">{{ debito.tipoDebito.descricao }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Área de Atuação</label>
+          <label title="Área de Atuação" class="form-control readonlyLabel">{{ debito.areaAtuacao.descricao }}</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label class="titleLabel" >Situação</label>
+          <label title="Situação" class="form-control readonlyLabel">{{ getSituacao(debito.situacao) }}</label>
+        </div>
+      </div>
+    </div>
+    <div class="card-body" *ngIf="dividaAtiva">
+      <h6><strong>Divida Ativa</strong></h6>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Data do Calculo</label>
+          <label title="Data do Calculo" class="form-control readonlyLabel">{{ dividaAtiva.dataCalculo | date:'dd/MM/yyyy'}}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Valor em Divida Ativa</label>
+          <label title="Valor em Divida Ativa" class="form-control readonlyLabel">{{ (dividaAtiva.valorDividaAtiva | maskMoney) }}</label>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h6><strong>Execução Fiscal</strong></h6>
+      <div class="form-row" *ngIf="resourceForm.get('id').value == null">
+        <div class="form-group col-md-12">
+          <label class="titleLabel" for="processo">Processo</label>
+          <input placeholder="Processo" title="Processo" type="text" class="form-control" id="processo" 
+            formControlName="processo" [imask]="maskInter2">
+          <app-form-field-error [form-control]="resourceForm.get('processo')"></app-form-field-error>
+        </div>
+      </div>
+      <div class="form-row" *ngIf="resourceForm.get('id').value != null">
+        <div class="form-group col-md-6">
+          <label class="titleLabel" for="processo">Processo</label>
+          <input placeholder="Processo" title="Processo" type="text" class="form-control" id="processo" 
+            formControlName="processo" [imask]="maskInter2">
+          <app-form-field-error [form-control]="resourceForm.get('processo')"></app-form-field-error>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Situação da Execução Fiscal</label>
+          <label title="Situação da Execução Fiscal" class="form-control readonlyLabel">
+            {{ getSituacaoExecucaoFiscal(resourceForm.get('situacao').value) }}
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <app-textarea-padrao for-name="observacao" nome="Observação" [resource-form]="resourceForm"></app-textarea-padrao>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-secondary float-right mt-3" title="Salvar">
+        <i class="pi pi-save"></i>
+        Salvar
+      </button>
+      <button type="button" class="btn btn-danger mt-3" [routerLink]="[urlList]" title="Cancelar">
+        <i class="pi pi-times"></i>
+        Cancelar
+      </button>
+    </div>
+  </div>
+</form>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

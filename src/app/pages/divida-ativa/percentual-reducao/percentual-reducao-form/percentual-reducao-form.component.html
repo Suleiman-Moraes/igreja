@@ -1,0 +1,76 @@
+<app-bread-crumb [itens]="[{text: 'Percentual de Redução', link: urlList}, {text: pageTitle}]"></app-bread-crumb>
+<app-page-header [page-title]="pageTitle" button-text=" Voltar" [button-link]="urlList"
+  icon-lass="pi pi-angle-double-left" button-class="text-center"></app-page-header>
+
+<form [formGroup]="resourceForm" (submit)="submitForm()" style="font-size: .8rem;">
+  <div class="box card">
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="titleLabel" for="numeroParcela">Número de Parcelas</label>
+          <input placeholder="Número de Parcelas" title="Número de Parcelas" type="text" class="form-control"
+            id="numeroParcela" formControlName="numeroParcela" (blur)="alterarValorDeParcelas()"
+            onkeypress="return somenteNumero(event);">
+          <app-form-field-error [form-control]="resourceForm.get('numeroParcela')"></app-form-field-error>
+        </div>
+        <div class="form-group col-md-6">
+          <app-input-padrao for-name="anoEdicao" nome="Ano de Edição" [resource-form]="resourceForm"></app-input-padrao>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <app-textarea-padrao for-name="descricao" nome="Descrição" [resource-form]="resourceForm">
+          </app-textarea-padrao>
+        </div>
+      </div>
+      <!-- <div formArrayName="percentualReducaos"> -->
+      <div class="form-row" formArrayName="percentualReducaos"
+        *ngFor="let item of percentualReducaos.controls; let i = index">
+        <ng-container [formGroupName]="i">
+          <div class="form-group col-md-2">
+            <label class="titleLabel" for="numeroParcela">Número da Parcela</label>
+            <label id="numeroParcela" title="Número de Parcela" class="form-control readonlyLabel">
+              {{ item.value.numeroParcela }}</label>
+          </div>
+          <div class="form-group col-md-5">
+            <label class="titleLabel" for="percentualReducao">Percentual de Redução</label>
+            <div class="input-group mb-3">
+              <input class="form-control" placeholder="Percentual de Redução" title="Percentual de Redução"
+                formControlName="percentualReducao" type="number" (blur)="defineCoeficienteDoCalculo(i)"
+                onkeypress="return somenteNumeroAndVirgulaAndPontoAndTraco(event);">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">%</span>
+              </div>
+            </div>
+            <app-form-field-error [form-control]="percentualReducaos.controls[i].get('percentualReducao')">
+            </app-form-field-error>
+          </div>
+          <div class="form-group col-md-5">
+            <label class="titleLabel" for="coeficienteCalculo">Coeficiente do Cálculo</label>
+            <label title="Coeficiente Acumulado" class="form-control readonlyLabel">
+              {{percentualReducaos.controls[i].get('coeficienteCalculo').value}}
+            </label>
+          </div>
+          <div class="form-group col-md-12">
+            <label class="float-right mt-3" style="color: red;" title="Todos os campos devem ser preenchidos" 
+              *ngIf="percentualReducaos.controls[i].invalid">
+              <i class="fa fa-exclamation-triangle"></i>
+              Todos os campos devem ser preenchidos*
+            </label>
+          </div>
+        </ng-container>
+      </div>
+      <!-- </div> -->
+      <button type="submit" class="btn btn-secondary float-right mt-3" title="Salvar"
+        *ngIf="percentualReducaos.controls.length >= 1">
+        <i class="pi pi-save"></i>
+        Salvar
+      </button>
+      <button type="button" class="btn btn-danger mt-3" [routerLink]="[urlList]" title="Cancelar">
+        <i class="pi pi-times"></i>
+        Cancelar
+      </button>
+    </div>
+  </div>
+</form>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

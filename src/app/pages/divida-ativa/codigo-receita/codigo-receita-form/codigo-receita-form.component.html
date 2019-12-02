@@ -1,0 +1,45 @@
+<app-bread-crumb [itens]="[{text: 'Código de Receita', link: urlList}, {text: pageTitle}]"></app-bread-crumb>
+<app-page-header [page-title]="pageTitle" button-text=" Voltar" [button-link]="urlList"
+  icon-lass="pi pi-angle-double-left" button-class="text-center"></app-page-header>
+
+<form [formGroup]="resourceForm" (submit)="submitForm()" style="font-size: .8rem;">
+  <div class="box card">
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <app-input-padrao for-name="codigoReceita" nome="Código da Receita" [resource-form]="resourceForm"></app-input-padrao>
+        </div>
+        <div class="form-group col-md-6">
+          <app-input-padrao for-name="subCodigoReceita" nome="Sub-Código da Receita" [resource-form]="resourceForm"></app-input-padrao>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="titleLabel" for="tipoDebito">Tipo de Crédito</label>
+          <select formControlName="tipoDebito" id="tipoDebito" class="form-control" title="Tipo de Crédito">
+            <option [value]="null" disabled>Selecione uma Situação</option>
+            <option *ngFor="let option of tiposDebito" [ngValue]="option">{{ option.descricao }}</option>
+          </select>
+          <app-form-field-error [form-control]="resourceForm.get('tipoDebito')"></app-form-field-error>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" for="areaAtuacao">Áreas de Atuação</label>
+          <select formControlName="areaAtuacao" id="areaAtuacao" class="form-control" title="Áread de Atuação">
+            <option [value]="null" disabled>Selecione uma Situação</option>
+            <option *ngFor="let option of areasAtuacao" [ngValue]="option">{{ option.descricao }}</option>
+          </select>
+          <app-form-field-error [form-control]="resourceForm.get('areaAtuacao')"></app-form-field-error>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-secondary float-right mt-3" title="Salvar">
+        <i class="pi pi-save"></i>
+        Salvar
+      </button>
+      <button type="button" class="btn btn-danger mt-3" [routerLink]="[urlList]" title="Cancelar">
+        <i class="pi pi-times"></i>
+        Cancelar
+      </button>
+    </div>
+  </div>
+</form>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

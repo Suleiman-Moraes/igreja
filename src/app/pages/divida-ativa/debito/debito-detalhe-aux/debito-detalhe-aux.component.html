@@ -1,0 +1,124 @@
+<div class="card" style="font-size: .8rem;">
+  <div class="card-body">
+    <div class="form-row">
+      <h5 style="font-family: sans-serif;"><strong>{{ 'Crédito nº ' + objeto.id }}</strong></h5>
+    </div>
+    <div class="table-responsive-lg" style="background: white;font-family: sans-serif;">
+      <table class="table table-striped table-bordered" style="font-size: 0.8rem;">
+        <!--Interno-->
+        <tbody>
+          <tr>
+            <td class="text-center" colspan="4">
+              <strong>Interessado </strong>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center">
+              <strong>Razão Social ou Nome: </strong>
+            </td>
+            <td class="text-center">
+              {{ objeto.razaoSocialNome }}
+            </td>
+            <td class="text-center">
+              <strong>Telefone: </strong>
+            </td>
+            <td class="text-center">
+              {{ objeto.telefone }}
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center">
+              <strong>E-mail: </strong>
+            </td>
+            <td class="text-center">
+              {{ objeto.email }}
+            </td>
+            <td class="text-center">
+              <strong>CNPJ, CEI, CPF: </strong>
+            </td>
+            <td class="text-center">
+              {{ objeto.cnpjCpfCei }}
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center">
+              <strong>Bairro: </strong>
+            </td>
+            <td class="text-center">
+              {{ objeto.bairro }}
+            </td>
+            <td class="text-center">
+              <strong>Cidade: </strong>
+            </td>
+            <td class="text-center">
+              {{ objeto.cidade }}
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center">
+              <strong>UF: </strong>
+            </td>
+            <td class="text-center">
+              {{ objeto.uf }}
+            </td>
+            <td class="text-center">
+              <strong>CEP: </strong>
+            </td>
+            <td class="text-center">
+              {{ objeto.cep }}
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center">
+              <strong>Logradouro: </strong>
+            </td>
+            <td class="text-center">
+              {{ objeto.logradouro }}
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center" colspan="4">
+              <strong>Crédito </strong>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center">
+              <strong>Número do Processo: </strong>
+            </td>
+            <td class="text-center">
+              {{ objeto.numeroProcesso }}
+            </td>
+            <td class="text-center">
+              <strong>Tipo do Crédito: </strong>
+            </td>
+            <td class="text-center">
+              {{ objeto.tipoDebito }}
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center">
+              <strong>Data de Cadastro: </strong>
+            </td>
+            <td class="text-center">
+              {{ objeto.dataCadastro }}
+            </td>
+            <td class="text-center">
+              <strong>Valor: </strong>
+            </td>
+            <td class="text-center">
+              {{ objeto.valor | maskMoney }}
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center">
+              <strong>Situação: </strong>
+            </td>
+            <td class="text-center">
+              {{ objeto.situacao }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

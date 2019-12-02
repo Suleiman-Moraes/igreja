@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+.botaoPadrao{
+    background-color: #17a2b8; 
+    border-color: #17a2b8;
+}
+
+.backgroundAgr {
+    background: #268731;
+    background-image: linear-gradient(141deg, #194e1e 0%, #268731 70%, #40a11c 100%);
+}
+
+.readonlyLabel{
+    background: lightgray;
+    border-style: solid;
+    border-color: gray;
+}
+
+.descricaoPadrao{
+    color: red;
+    font-size: 0.75rem;
+}
+
+.titleLabel{
+    font-weight: bold;
+}
+
+.box {
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #268731;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}

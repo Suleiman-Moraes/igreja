@@ -1,0 +1,18 @@
+export enum UrlModuloEnum{
+    debito = 'dividaativa/debito',
+    debitoExterno = 'dividaativa/debito/externo',
+    debitoTramite = 'dividaativa/debito/tramite',
+    execucaoFiscal = 'dividaativa/execucaofiscal',
+    itemchecklist = 'dividaativa/itemchecklist',
+    negociacao = 'dividaativa/negociacao',
+    prazo = 'dividaativa/prazo',
+    parametro = 'dividaativa/parametro',
+    percentualreducao = 'dividaativa/percentualreducao',
+    mensagempadrao = 'dividaativa/mensagempadrao',
+    situacaonotificacaotramite = 'dividaativa/situacaonotificacaotramite',
+    tipodebito = 'dividaativa/tipodebito',
+    indiceigpdi = 'dividaativa/indiceigpdi',
+    areaatuacao = 'dividaativa/areaatuacao',
+    codigoreceita = 'dividaativa/codigoreceita',
+    dataferiado = 'dividaativa/dataferiado',
+}

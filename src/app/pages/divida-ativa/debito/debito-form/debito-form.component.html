@@ -1,0 +1,328 @@
+<app-bread-crumb [itens]="[{text: 'Créditos', link: urlList}, {text: pageTitle}]"></app-bread-crumb>
+<app-page-header [page-title]="pageTitle" button-text=" Voltar" [button-link]="urlList"
+  icon-lass="pi pi-angle-double-left" button-class="text-center" show-button="false"></app-page-header>
+
+  
+<form [formGroup]="resourceForm" (submit)="submitForm()" style="font-size: .8rem;">
+  <div class="box card">
+    <div class="card-body">
+      <form [formGroup]="devedorForm">
+        <div class="form-row" *ngIf="currentAction == 'edit' && objeto.usuarioId != id">
+          <div class="form-group col-md-10">
+            <label style="color:#ff9900">
+              {{objeto.usuarioId == null ?
+                'Para iniciar o tratamento do débito é necessário assumir a análise, clicando no botão Analisar Crédito.'
+                : objeto.usuarioId == id ? 
+                  ""
+                  :"O débito está sendo analisado pelo analista " + objeto.nomeUsuario 
+                  +". Se deseja assumir a análise do débito clique em Assumir Análise do Crédito."}}
+            </label>
+          </div>
+          <div class="form-group col-md-2">
+            <app-debito-assumir-analise [usuario-id]="objeto.usuarioId" [id]="id" [id-debito]="objeto.id"
+              [confirmation-service]="confirmationService"></app-debito-assumir-analise>
+          </div>
+        </div>
+
+        <h6><strong>Devedor</strong></h6>
+        <div class="form-row" *ngIf="currentAction == 'new'">
+          <div class="form-group col-md-6">
+            <label class="titleLabel" for="cnpjCpfCei">CNPJ / CPF</label>
+            <input placeholder="CNPJ / CPF" title="CNPJ / CPF" type="text" class="form-control"
+              id="cnpjCpfCei" formControlName="cnpjCpfCei" [imask]="maskCnpjOrCpf">
+            <app-form-field-error [form-control]="devedorForm.get('cnpjCpfCei')"></app-form-field-error>
+          </div>
+          <div class="form-group col-md-5"></div>
+          <div class="form-group col-md-1">
+            <br>
+            <button type="button" class="btn btn-secondary mt-2"
+              [title]="verificarCcc() ? 'CNPJ, CEI ou CPF Inserido de forma incorreta' : 'Pesquisar'"
+              (click)="empresaFindByCnpjCpfCei()" [disabled]="verificarCcc()">
+              <i class="fa fa-search"></i>
+              Pesquisar
+            </button>
+          </div>
+        </div>
+        <div class="form-row" *ngIf="currentAction == 'edit'">
+          <div class="form-group col-md-12">
+            <label class="titleLabel" >CNPJ / CPF</label>
+            <label title="CNPJ / CPF" class="form-control readonlyLabel">{{ devedorForm.value.cnpjCpfCei }}</label>
+          </div>
+        </div>
+        <div class="form-row" *ngIf="devedorForm.value.id">
+          <div class="form-group col-md-6">
+            <label class="titleLabel" >Razão Social ou Nome</label>
+            <label title="Razão Social ou Nome" class="form-control readonlyLabel">{{ devedorForm.value.razaoSocialNome }}</label>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="titleLabel" >Inscrição Estadual</label>
+            <label title="Inscrição Estadual" class="form-control readonlyLabel">{{ devedorForm.value.inscricaoEstadual }}</label>
+          </div>
+        </div>
+        <div class="form-row" *ngIf="devedorForm.value.id">
+          <div class="form-group col-md-6">
+            <label class="titleLabel" >Telefone</label>
+            <label title="Telefone" class="form-control readonlyLabel">{{ devedorForm.value.telefone }}</label>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="titleLabel" >E-mail</label>
+            <label title="E-mail" class="form-control readonlyLabel">{{ devedorForm.value.email }}</label>
+          </div>
+        </div>
+        <div class="form-row" *ngIf="devedorForm.value.id">
+          <div class="form-group col-md-12">
+            <label class="titleLabel" >Observação</label>
+            <label title="Observação" class="form-control readonlyLabel">{{ devedorForm.value.observacao }}</label>
+          </div>
+        </div>
+        <div class="form-row" *ngIf="devedorForm.value.id">
+          <button class="btn btn-secondary" title="Visualizar Documentação" (click)="showModal()">
+            <i class="pi pi-print"></i>Visualizar Documentação
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="card-body"
+      *ngIf="devedorForm.value.id && devedorForm.value.enderecos && devedorForm.value.enderecos.length > 0">
+      <h6><strong>Endereço</strong></h6>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Logradouro</label>
+          <label title="Logradouro" class="form-control readonlyLabel">{{ devedorForm.value.enderecos[0].logradouro }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Bairro</label>
+          <label title="Bairro" class="form-control readonlyLabel">{{ devedorForm.value.enderecos[0].bairro }}</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Cidade</label>
+          <label title="Cidade" class="form-control readonlyLabel">{{ devedorForm.value.enderecos[0].cidade }}</label>
+        </div>
+        <div class="form-group col-md-1">
+          <label class="titleLabel" >UF</label>
+          <label title="UF" class="form-control readonlyLabel">{{ devedorForm.value.enderecos[0].uf }}</label>
+        </div>
+        <div class="form-group col-md-5">
+          <label class="titleLabel" >CEP</label>
+          <label title="CEP" class="form-control readonlyLabel">{{ devedorForm.value.enderecos[0].cep }}</label>
+        </div>
+      </div>
+    </div>
+    <div class="card-body" *ngIf="devedorForm.value.id && (objeto.usuarioId == id || currentAction == 'new')">
+      <h6><strong>Dados</strong></h6>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="titleLabel" for="origemCadastro">Origem do Cadastro</label>
+          <select name="origemCadastro" id="origemCadastro" formControlName="origemCadastro" class="form-control"
+            title="Origem do Cadastro" (change)="atualizarDataCadastro()">
+            <option [value]="null" disabled>Selecione uma Origem do Cadastro</option>
+            <option *ngFor="let option of origemCadastroOptions" [value]="option.value">{{ option.text }}</option>
+          </select>
+          <app-form-field-error [form-control]="resourceForm.get('origemCadastro')"></app-form-field-error>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" for="numeroProcesso">Processo SEI</label>
+          <input placeholder="Número do Processo" title="Número do Processo" type="text" class="form-control"
+            id="numeroProcesso" formControlName="numeroProcesso" [imask]="{mask: [{mask: '000000000000000'}] }">
+          <app-form-field-error [form-control]="resourceForm.get('numeroProcesso')"></app-form-field-error>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="lote">Lote</label>
+          <input class="form-control" placeholder="Lote" title="Lote" formControlName="lote"
+              onkeypress="return somenteNumero(event);">
+        </div>
+        <div class="form-group col-md-6">
+          <app-input-padrao for-name="caixaArquivo" nome="Caixa do Arquivo" [resource-form]="resourceForm">
+          </app-input-padrao>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="titleLabel" for="numeroAutoInfracao">Número do Auto Infração</label>
+          <input placeholder="Número do Auto Infração" title="Número do Auto Infração" type="text" class="form-control"
+            id="numeroAutoInfracao" formControlName="numeroAutoInfracao" [imask]="maskInter2">
+          <app-form-field-error [form-control]="resourceForm.get('numeroAutoInfracao')"></app-form-field-error>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" for="valor">Valor</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">R$</span>
+            </div>
+            <input class="form-control" placeholder="Valor" title="Valor" formControlName="valor" (paste)="pasteEventListen($event)"
+              onkeypress="return somenteNumeroAndVirgulaAndPonto(event);" [imask]="maskMoney">
+          </div>
+          <app-form-field-error [form-control]="resourceForm.get('valor')"></app-form-field-error>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="titleLabel" for="tipoDebito">Tipo do Crédito</label>
+          <select id="tipoDebito" formControlName="tipoDebito" class="form-control" title="Tipo do Crédito"
+            (change)="defineNaturezaCredito(resourceForm.get('tipoDebito').value)">
+            <option [value]="null" disabled>Selecione um Tipo do Crédito</option>
+            <option *ngFor="let option of listTipoDebitos" [value]="option.id">{{ option.descricao }}</option>
+          </select>
+          <app-form-field-error [form-control]="resourceForm.get('tipoDebito')"></app-form-field-error>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" for="areaAtuacao">Área de Atuação</label>
+          <select id="areaAtuacao" formControlName="areaAtuacao" class="form-control" title="Área de Atuação">
+            <option [value]="null" disabled>Selecione uma Área de Atuação</option>
+            <option *ngFor="let option of areasDeAtuacao" [ngValue]="option.id">{{ option.descricao }}</option>
+          </select>
+          <app-form-field-error [form-control]="resourceForm.get('areaAtuacao')"></app-form-field-error>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="titleLabel" for="dataRemocaoVeiculo">Existe Termo de Remoção de Veículo?
+            <input class="col-auto" type="checkbox" formControlName="veiculoRemovido" id="apreendido"
+              (click)="invalidDate()">
+          </label>
+          <p-calendar id="dataRemocaoVeiculo" formControlName="dataRemocaoVeiculo" inputStyleClass="form-control"
+            [style]="{'width':'100%'}" dateFormat="dd/mm/yy" [locale]="ptBR" [showButtonBar]="true"
+            title="Data da Remoção" [maxDate]="maxDate" placeholder="Data da Remoção" onkeypress="return data(event);"
+            *ngIf="resourceForm.value.veiculoRemovido">
+          </p-calendar>
+          <label title="Data do Processo" class="form-control" aria-readonly="true"
+            *ngIf="!resourceForm.value.veiculoRemovido">{{ (objeto.dataRemocaoVeiculo | date:'dd/MM/yyyy') == null ?
+              'Data da Remoção': objeto.dataRemocaoVeiculo | date:'dd/MM/yyyy' }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" for="naturezaDivida">Natureza do Crédito</label>
+          <label title="Natureza do Crédito" class="form-control readonlyLabel">{{ getNaturezaDivida(resourceForm.get('naturezaDivida').value) }}</label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label class="titleLabel" for="situacao">Situação</label>
+          <select id="situacao" formControlName="situacao" class="form-control" title="Situação">
+            <option [value]="null" disabled>Selecione uma Situação</option>
+            <option *ngFor="let option of situacaoOptions" [value]="option.value">{{ option.text }}</option>
+          </select>
+          <li class="descricaoPadrao" *ngIf="getDescricaoSituacao(resourceForm.get('situacao').value) != ''">
+            {{ getDescricaoSituacao(resourceForm.get('situacao').value) }}
+          </li>
+          <app-form-field-error [form-control]="resourceForm.get('situacao')"></app-form-field-error>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-body" *ngIf="devedorForm.value.id && objeto.usuarioId != id && currentAction == 'edit'">
+      <h6><strong>Dados</strong></h6>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Origem do Cadastro</label>
+          <label title="Origem do Cadastro" class="form-control readonlyLabel">{{ getOrigemCadastro(objeto.origemCadastro) }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Número do Processo</label>
+          <label title="Número do Processo" class="form-control readonlyLabel">{{ objeto.numeroProcesso }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Lote</label>
+          <label title="Lote" class="form-control readonlyLabel">{{ objeto.lote }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Caixa do Arquivo</label>
+          <label title="Caixa do Arquivo" class="form-control readonlyLabel">{{ objeto.caixaArquivo }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Número do Auto Infração</label>
+          <label title="Número do Auto Infração" class="form-control readonlyLabel">{{ objeto.numeroAutoInfracao }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Valor</label>
+          <label title="Valor" class="form-control readonlyLabel">{{ (objeto.valor | maskMoney) }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Tipo do Crédito</label>
+          <label title="Tipo do Crédito"
+            class="form-control readonlyLabel">{{ getTipoDebito(resourceForm.get('tipoDebito').value) }}</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Área de Atuação</label>
+          <label title="Área de Atuação"
+            class="form-control readonlyLabel">{{ getAreaAtuacao(resourceForm.get('areaAtuacao').value)}}</label>
+        </div>
+
+        <!--<div class="form-group col-md-6">
+          <label>Área de Atuação</label>
+          <label title="Área de Atuação" class="form-control">{{ getAreaAtuacao(objeto.areaAtuacao) }}</label>
+        </div>-->
+
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Remoção do Veiculo</label>
+          <label title="Remoção do Veiculo" class="form-control readonlyLabel">
+            {{ objeto.veiculoRemovido ? 'Removido em ' + (objeto.dataRemocaoVeiculo | date:'dd/MM/yyyy') : 'Veiculo não foi removido' }}
+          </label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" >Natureza do Crédito</label>
+          <label title="Natureza do Crédito" class="form-control readonlyLabel">{{ getNaturezaDivida(objeto.naturezaDivida) }}</label>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="titleLabel" >Situação</label>
+          <label title="Situação" class="form-control readonlyLabel">{{ getSituacao(objeto.situacao) }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-secondary float-right mt-3" title="Salvar"
+    *ngIf="devedorForm.value.id && (objeto.usuarioId == id || currentAction == 'new')">
+    <i class="pi pi-save"></i>
+    Salvar
+  </button>
+  <a class="btn btn-danger mt-3" [href]="'#' + urlList" title="Cancelar" *ngIf="devedorForm.value.id">
+    <i class="pi pi-times"></i>
+    Cancelar
+  </a>
+</form>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+<p-dialog [header]="tituloModal" [(visible)]="display" [modal]="true" [responsive]="true" [style]="{width: '700px', minWidth: '500px'}" 
+  [minY]="70" [maximizable]="true" [baseZIndex]="100" [closable]="true" [contentStyle]="{'max-height':'500px'}">
+  <span>
+    <div class="card-body" *ngIf="this.anexosCADU.length > 0">
+      <div class="table-responsive-lg" style="background: white;font-family: sans-serif;">
+        <table class="table table-hover table-bordered" style="font-size: 0.8rem;">
+          <thead>
+            <tr>
+              <th scope="col" width="40%" class="text-center">Nome do arquivo</th>
+              <th scope="col" width="40%" class="text-center">Descrição</th>
+              <th scope="col" width="40%" class="text-center">Validado Em </th>
+              <th scope="col" width="20%" class="text-center">Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obj of anexosCADU; let i = index">
+              <td class="text-center">
+                {{ obj.nome }}
+              </td>
+              <td class="text-center">
+                {{ obj.descricao }}
+              </td>
+              <td class="text-center">
+                {{ obj.validadoEm | date:'dd/MM/yyyy HH:mm:ss' }}
+              </td>
+              <td class="text-center">
+                <a [href]="caduApiAnexoDownload + '?id=' + obj.id + '&caminhoServidor='" target="_blank" title="Baixar Anexo" class="btn btn-outline-secondary">
+                  <i class="fa fa-download"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-body" *ngIf="this.anexosCADU.length <= 0">
+      Não existe nenhuma Documentação na base de dados.
+    </div>
+  </span>
+</p-dialog>

@@ -1,0 +1,49 @@
+<app-bread-crumb [itens]="[{text: 'Tipo de Crédito', link: urlList}, {text: pageTitle}]"></app-bread-crumb>
+<app-page-header [page-title]="pageTitle" button-text=" Voltar" [button-link]="urlList"
+  icon-lass="pi pi-angle-double-left" button-class="text-center"></app-page-header>
+
+<form [formGroup]="resourceForm" (submit)="submitForm()" style="font-size: .8rem;">
+  <div class="box card">
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label class="titleLabel" for="usuarioInterno">Tipo do Acesso</label>
+          <div class="btn-group">
+            <label (click)="changeTipoData(true);" [class.active]="fixoOrNot == true" class="btn btn-outline-primary">Data Fixa</label>
+            <label (click)="changeTipoData(false);" [class.active]="fixoOrNot == false" class="btn btn-outline-primary">Data Variavel</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <!--TIPO DATA-->
+        <div class="form-group col-md-12" *ngIf="fixoOrNot == true">
+          <label class="titleLabel" for="dataFeriadoFixo">Data Fixa</label>
+          <input placeholder="Data do Feriado Fixo (dia/mes)" title="Data do Feriado Fixo" type="text" class="form-control" id="dataFeriadoFixo"
+            formControlName="dataFeriadoFixo" [imask]="{mask: [{mask: '00/00'}] }" (keyup)="verificaData($event)">
+          <app-form-field-error [form-control]="resourceForm.get('dataFeriadoFixo')"></app-form-field-error>
+        </div>
+        <div class="form-group col-md-12" *ngIf="fixoOrNot == false">
+          <label class="titleLabel" for="dataFeriadoVariavel">Data Variavel do Feriado</label>
+          <p-calendar id="dataFeriadoVariavel" formControlName="dataFeriadoVariavel" inputStyleClass="form-control" [style]="{'width':'100%'}"
+            dateFormat="dd/mm/yy" [locale]="ptBR" [showButtonBar]="true" title="Data Variavel do Feriado" placeholder="Data Variavel do Feriado"
+            onkeypress="return data(event);">
+          </p-calendar>
+        </div>
+      </div>
+      <div class="form-row" *ngIf="fixoOrNot != null">
+        <div class="form-group col-md-12">
+          <app-input-padrao for-name="descricao" nome="Descrição" [resource-form]="resourceForm"></app-input-padrao>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-secondary float-right mt-3" title="Salvar">
+        <i class="pi pi-save"></i>
+        Salvar
+      </button>
+      <button type="button" class="btn btn-danger mt-3" [routerLink]="[urlList]" title="Cancelar">
+        <i class="pi pi-times"></i>
+        Cancelar
+      </button>
+    </div>
+  </div>
+</form>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

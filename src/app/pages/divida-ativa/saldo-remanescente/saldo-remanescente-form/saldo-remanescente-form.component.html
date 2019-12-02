@@ -1,0 +1,52 @@
+<app-bread-crumb [itens]="[{text: 'Saldo Remanescente', link: urlList}, {text: pageTitle}]"></app-bread-crumb>
+<app-page-header [page-title]="pageTitle" button-text=" Voltar" [button-link]="urlList"
+  icon-lass="pi pi-angle-double-left" button-class="text-center"></app-page-header>
+
+<form [formGroup]="resourceForm" (submit)="submitForm()" style="font-size: .8rem;">
+  <div class="box card">
+    <div class="card-body">
+      <div class="form-row">
+        <div class="col-md-6"> 
+          <label class="titleLabel" >CNPJ/CEI/CPF</label>
+          <label title="CNPJ/CEI/CPF" class="form-control readonlyLabel">
+            {{ devedor? devedor.cnpjCpfCei:' - ' }}
+          </label>
+        </div>
+        <div class="col-md-6"> 
+          <label class="titleLabel" >Razão Social/Nome</label>
+          <label title="Razão Social/Nome" class="form-control readonlyLabel">
+            {{ devedor? devedor.razaoSocialNome: ' - ' }}
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-6"> 
+          <label class="titleLabel" for="Saldo">Saldo</label>
+          <label title="Saldo" class="form-control readonlyLabel">
+            {{ resourceForm.value.saldo | maskMoney }}
+          </label>
+        </div>
+        <div class="col-md-6"> 
+          <label class="titleLabel" for="telefone">Telefone</label>
+          <label title="Telefone" class="form-control readonlyLabel">
+            {{ devedor? devedor.telefone : ' - ' }}
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <app-input-padrao for-name="observacao" nome="Observação" [resource-form]="resourceForm"></app-input-padrao>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-secondary float-right mt-3" title="Salvar" [disabled]="getPodeZerar()" >
+        <i class="pi pi-save"></i>
+        Zerar Saldo
+      </button>
+      <button type="button" class="btn btn-danger mt-3" [routerLink]="[urlList]" title="Cancelar">
+        <i class="pi pi-times"></i>
+        Cancelar
+      </button>
+    </div>
+  </div>
+</form>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
