@@ -1,5 +1,5 @@
+import { IGREJA_API_AUTH, IGREJA_API_REFRESH } from './../../igreja/shared/igreja.api';
 import { map } from 'rxjs/operators';
-import { CADU_API_AUTH, CADU_API_REFRESH } from './../../cadastrounico/shared/cadastrounico.api';
 import { User } from './user.model';
 import { UserLogado } from './user-logado.model';
 import { HttpClient } from '@angular/common/http';
@@ -37,7 +37,7 @@ export class AuthenticationService implements OnInit {
   }
 
   login(user: User): Observable<UserLogado> {
-    return this.http.post<any>(`${CADU_API_AUTH}`, user)
+    return this.http.post<any>(`${IGREJA_API_AUTH}`, user)
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
         if (user && user.token) {
@@ -55,7 +55,7 @@ export class AuthenticationService implements OnInit {
   }
 
   refresh(): Observable<UserLogado> {
-    return this.http.get<any>(`${CADU_API_REFRESH}`)
+    return this.http.get<any>(`${IGREJA_API_REFRESH}`)
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
         if (user && user.token) {
