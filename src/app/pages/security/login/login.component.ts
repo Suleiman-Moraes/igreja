@@ -101,7 +101,7 @@ export class LoginComponent implements OnInit {
   private buildResourceForm(): void {
     this.loginForm = this.formBuilder.group({
       login: [null, [Validators.required, Validators.maxLength(255)]],
-      senha: [null, [Validators.required, Validators.maxLength(255)]]
+      password: [null, [Validators.required, Validators.maxLength(255)]]
     });
   }
 }

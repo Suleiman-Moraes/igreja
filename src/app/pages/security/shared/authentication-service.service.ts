@@ -18,7 +18,7 @@ export class AuthenticationService implements OnInit {
   constructor(
     private http: HttpClient
   ) {
-    const json = localStorage.getItem('tRcr7Ssn') != null ? atob(localStorage.getItem('tRcr7Ssn')) : null;
+    const json = localStorage.getItem('ghEWfsgfRTRfzfdsE') != null ? atob(localStorage.getItem('ghEWfsgfRTRfzfdsE')) : null;
     this.currentUserSubject = new BehaviorSubject<UserLogado>(JSON.parse(json));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -38,7 +38,7 @@ export class AuthenticationService implements OnInit {
         if (u && u.token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           this.showTemplate.emit(true);
-          localStorage.setItem('tRcr7Ssn', btoa(JSON.stringify(u)));
+          localStorage.setItem('ghEWfsgfRTRfzfdsE', btoa(JSON.stringify(u)));
           this.currentUserSubject.next(u);
         } else {
           this.showTemplate.emit(false);
@@ -55,7 +55,7 @@ export class AuthenticationService implements OnInit {
         if (user && user.token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           this.showTemplate.emit(true);
-          localStorage.setItem('tRcr7Ssn', btoa(JSON.stringify(user)));
+          localStorage.setItem('ghEWfsgfRTRfzfdsE', btoa(JSON.stringify(user)));
           this.currentUserSubject.next(user);
         } else {
           this.showTemplate.emit(false);
@@ -66,7 +66,7 @@ export class AuthenticationService implements OnInit {
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('tRcr7Ssn');
+    localStorage.removeItem('ghEWfsgfRTRfzfdsE');
     this.showTemplate.emit(false);
     this.currentUserSubject.next(null);
   }
