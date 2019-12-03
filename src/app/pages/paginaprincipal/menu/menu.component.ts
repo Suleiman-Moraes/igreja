@@ -19,7 +19,6 @@ export class MenuComponent implements OnInit {
   // tslint:disable-next-line: new-parens
   currentUser: UserLogado = new UserLogado;
 
-  senhaTemporaria = true;
   usuarioInterno = false;
   verificarPermissaoModuloRegular: boolean = null;
   cont = 0;

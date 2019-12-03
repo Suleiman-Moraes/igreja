@@ -23,9 +23,9 @@ export class HeaderComponent implements OnInit {
     if (this.currentUser) {
       this.userLogin = this.currentUser.user.login;
     }
-    if (document.getElementById('menusButton') != null) {
-      document.getElementById('menusButton').click();
-    }
+    // if (document.getElementById('menusButton') != null) {
+    //   document.getElementById('menusButton').click();
+    // }
   }
 
   deslogar(): void {
@@ -33,10 +33,6 @@ export class HeaderComponent implements OnInit {
   }
 
   signOut() { }
-
-  get capturarNomeUsuario(): string {
-    return this.currentUser.user.nome;
-  }
 
   get captruarData(): Date {
     return this.currentUser.user.dataInclusao;

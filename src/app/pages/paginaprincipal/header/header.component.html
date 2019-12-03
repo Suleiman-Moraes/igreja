@@ -28,7 +28,7 @@
             style="background:none;" >
           <img src="https://img.icons8.com/ios/420/user-male-circle-filled.png" 
             class="img-circle" alt="User Image" width="25px" height="25px">
-            {{ capturarNomeUsuario }}
+            {{ currentUser.user.nome }}
           </button>
           <div class="dropdown-menu">
             <!-- The user image in the menu -->
@@ -37,14 +37,14 @@
                 class="img-circle"  alt="User Image" width="25px" height="25px" style="border: none">
 
               <p>
-                {{ capturarNomeUsuario }}
-                <small>Cadastrado desde {{ captruarData | date: 'dd/MM/yyyy' }}</small>
+                {{ currentUser.user.nome }}
+                <small>Cadastrado desde {{ currentUser.user.dataInclusao | date: 'dd/MM/yyyy' }}</small>
               </p>
             </li>
             <!-- Menu Footer-->
             <li class="user-footer" style="background: whitesmoke">
               <div class="pull-left">
-                  <a  [href]="getUrlLink('/usuario/meuperfil')"><button class="btn btn-default pull-left" type="button"
+                  <a  href="#/pages/meuperfil"><button class="btn btn-default pull-left" type="button"
                   style="margin-left: 10px; background: lightgray"> Perfil </button></a>
               </div>
               <div class="pull-right">
