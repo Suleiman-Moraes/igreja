@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-    this.returnUrl = 'cadastrounico';
+    this.returnUrl = 'pages';
     const user: User = this.loginForm.value as User;
 
     this.authenticationService.login(user)

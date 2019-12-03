@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
   private currentUserName: string = null;
   private currentUser: UserLogado = null;
   userLogin = '';
-  cadastroUnico = 'home';
+  home = '#/pages';
 
   constructor(
     private authenticationService: AuthenticationService

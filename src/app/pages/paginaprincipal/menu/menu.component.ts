@@ -13,7 +13,7 @@ import { MessageService } from 'primeng/api';
 })
 export class MenuComponent implements OnInit {
 
-  cadastroUnico = 'home';
+  home = '#/pages';
 
 
   // tslint:disable-next-line: new-parens
@@ -100,11 +100,11 @@ export class MenuComponent implements OnInit {
 
   redirect(module: string) {
     this.deslogar();
-    window.location.href = this.cadastroUnico + module;
+    window.location.href = this.home + module;
   }
 
   getUrlLink(teste: string) {
-    return this.cadastroUnico.valueOf() + teste;
+    return this.home.valueOf() + teste;
   }
 
   deslogar(): void {

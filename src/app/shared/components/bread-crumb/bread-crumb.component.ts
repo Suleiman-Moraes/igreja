@@ -14,7 +14,7 @@ export class BreadCrumbComponent implements OnInit {
 
   @Input() itens: Array<BreadCrumbItem> = [];
 
-  cadastroUnico = 'home';
+  cadastroUnico = '';
 
   constructor() { }
 
