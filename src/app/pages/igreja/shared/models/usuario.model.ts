@@ -1,23 +1,16 @@
 import { BaseResourceModel } from 'src/app/shared/models/base-resource.model';
+import { Permissao } from './permissao.model';
+import { Membro } from './membro.model';
 
 export class Usuario extends BaseResourceModel{
     constructor(
         public login?: string,
-        public senha?: string,
-        public confirmarSenha?: string,
         public nome?: string,
+        public senha?: string,
         public ativo?: boolean,
-        public matricula?: string,
-        public usuarioInterno?: boolean,
-        public senhaTemporaria?: boolean,
-        public telefone?: any,
-        public email?: any,
-        public pessoaJuridica?: any,
-        public pessoaFisica?: any,
-        public unidade?: any,
-        public perfis?: any[],
         public dataInclusao?: Date,
-        public vincularPessoa?: boolean
+        public membro?: Membro,
+        public permissoes?: Permissao[]
     ){
         super();
     }

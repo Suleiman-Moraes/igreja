@@ -11,66 +11,36 @@ export class HeaderComponent implements OnInit {
 
   private currentUserName: string = null;
   private currentUser: UserLogado = null;
-  userLogin: string = '';
-  cadastroUnico: string = 'home';
+  userLogin = '';
+  cadastroUnico = 'home';
 
   constructor(
     private authenticationService: AuthenticationService
-  ){}
+  ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.currentUser = this.authenticationService.currentUserValue;
-    if(this.currentUser){
+    if (this.currentUser) {
       this.userLogin = this.currentUser.user.login;
     }
-    if(document.getElementById('menusButton') != null ){
+    if (document.getElementById('menusButton') != null) {
       document.getElementById('menusButton').click();
     }
   }
 
-  deslogar(): void{
+  deslogar(): void {
     this.authenticationService.logout();
   }
 
-  getUrlLink(teste:string){
-    return this.cadastroUnico.valueOf() + teste;
+  signOut() { }
+
+  get capturarNomeUsuario(): string {
+    return this.currentUser.user.nome;
   }
 
-  signOut(){
-    
+  get captruarData(): Date {
+    return this.currentUser.user.dataInclusao;
   }
 
-  get capturarNomeUsuario(): string{
-    if (this.currentUser != null && this.currentUserName == null) {
-      if(this.currentUser.user.nome != null && this.currentUser.user.nome != ''){
-        this.currentUserName = this.currentUser.user.nome;
-      }
-      else if(this.currentUser.user.pessoaFisica != null){
-        this.currentUserName = this.currentUser.user.pessoaFisica.nome;
-      }
-      else if(this.currentUser.user.pessoaJuridica != null){
-        this.currentUserName = this.currentUser.user.pessoaJuridica.nomeFantasia;
-      }
-      else{
-        this.currentUserName = this.currentUser.user.login;
-      }
-    }
-
-    return this.currentUserName;
-  }
-
-  get captruarData(): Date{
-    if(this.currentUser != null){
-      if(this.currentUser.user.pessoaFisica != null){
-        return this.currentUser.user.pessoaFisica.dataInclusao;
-      }
-      if(this.currentUser.user.pessoaJuridica != null){
-        return this.currentUser.user.pessoaJuridica.dataInclusao;
-      }
-    }
-    return null;
-  }
-
-  //PRIVATE METHODS
-
+  // PRIVATE METHODS
 }

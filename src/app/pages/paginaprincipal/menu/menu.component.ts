@@ -2,10 +2,8 @@ import { AuthenticationService } from './../../security/shared/authentication-se
 import { Component, OnInit } from '@angular/core';
 import { UserLogado } from '../../security/shared/user-logado.model';
 import * as $ from 'jquery';
-import { UserAuthenticationCadu } from '../../security/shared/user-authentication-cadu.model';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Usuario } from '../../igreja/shared/models/usuario.model';
 
 @Component({
   selector: 'app-menu',
@@ -15,18 +13,18 @@ import { Usuario } from '../../igreja/shared/models/usuario.model';
 })
 export class MenuComponent implements OnInit {
 
-  cadastroUnico: string = 'home';
-  
+  cadastroUnico = 'home';
 
+
+  // tslint:disable-next-line: new-parens
   currentUser: UserLogado = new UserLogado;
 
-  senhaTemporaria: boolean = true;
-  usuarioInterno: boolean = false;
-  usuarioPessoaFisicaSemCei: boolean = false;
+  senhaTemporaria = true;
+  usuarioInterno = false;
   verificarPermissaoModuloRegular: boolean = null;
-  cont: number = 0;
+  cont = 0;
 
-  //Permissões
+  // Permissões
   moduloCADU: boolean = null;
   consultarDadosEmpresa: boolean = null;
   moduloFINANCAS: boolean = null;
@@ -38,68 +36,27 @@ export class MenuComponent implements OnInit {
     private router: Router,
     private messageService: MessageService,
     private authenticationService: AuthenticationService
-  ){}
+  ) { }
 
   ngOnInit() {
     this.currentUser = this.authenticationService.currentUserValue;
-    if(this.currentUser != null){
-      if(this.currentUser.user.pessoaFisica != null){
-        if(this.currentUser.user.pessoaFisica.cei == null || this.currentUser.user.pessoaFisica.cei.length == 0){
-          this.usuarioPessoaFisicaSemCei = true;
-        }
-      }
-      this.senhaTemporaria = this.currentUser != null && this.currentUser.user.senhaTemporaria;
-      this.usuarioInterno = this.currentUser.user.usuarioInterno;
-      this.getVerificarPermissaoModuloRegular();
-    }
-  }
-
-  getVerificarPermissaoModuloRegular() {
-    let userAux: Usuario = this.currentUser.user;
-    let permissao: boolean = false;
-    userAux.perfis.forEach(perfil => {
-
-      if (perfil.id != null && (perfil.id == 5 /*Interno Regular*/ || perfil.id == 6 /*Externo Regular*/
-        || perfil.id == 3 /*Administrador*/)) {
-        permissao = true;
-      }
-    });
-    this.verificarPermissaoModuloRegular = permissao;
-  }
-
-  get getPermissaoNaoRegular(): boolean {
-    let userAux: Usuario = this.currentUser.user;
-    let permissao: boolean = false;
-    userAux.perfis.forEach(perfil => {
-      if (perfil.id != null && (perfil.id == 1 /*Interno Não Regular*/
-        || perfil.id == 2 /*Externo Não Regular*/
-        || perfil.id == 3 /*Administrador*/)
-      ) {
-        permissao = true;
-      }
-    });
-    return permissao;
-  }
-
-  get usuarioAutenticacao(): UserAuthenticationCadu{
-    return UserAuthenticationCadu.parseUsuario(this.currentUser);
   }
 
   protected showError(detail: string) {
-    this.messageService.add({ severity: 'error', summary: 'Erro', detail: detail });
+    this.messageService.add({ severity: 'error', summary: 'Erro', detail });
   }
 
-  temPermissao(per: string): boolean{
-    if(this[per] == null){
+  temPermissao(per: string): boolean {
+    if (this[per] == null) {
       this[per] = this.verificarPermissao(per);
     }
     return this[per];
   }
 
-  pesquisarMenu(): void{
-    var term = $('#search-input').val().trim();
+  pesquisarMenu(): void {
+    const term = $('#search-input').val().trim();
     if (term.length === 0) {
-      $('.sidebar-menu li').each(function () {
+      $('.sidebar-menu li').each(function() {
         $(this).show(0);
         $(this).removeClass('active');
         if ($(this).data('lte.pushmenu.active')) {
@@ -109,7 +66,7 @@ export class MenuComponent implements OnInit {
       return;
     }
 
-    $('.sidebar-menu li').each(function () {
+    $('.sidebar-menu li').each(function() {
       if ($(this).text().toLowerCase().indexOf(term.toLowerCase()) === -1) {
         $(this).hide(0);
         $(this).removeClass('pushmenu-search-found', false);
@@ -125,7 +82,7 @@ export class MenuComponent implements OnInit {
           $(this).addClass('active');
         }
 
-        var parent = $(this).parents('li').first();
+        const parent = $(this).parents('li').first();
         if (parent.is('.treeview')) {
           parent.show(0);
         }
@@ -136,30 +93,32 @@ export class MenuComponent implements OnInit {
       }
     });
 
-    $('.sidebar-menu li.pushmenu-search-found.treeview').each(function () {
+    $('.sidebar-menu li.pushmenu-search-found.treeview').each(function() {
       $(this).find('.pushmenu-search-found').show(0);
     });
   }
 
-  redirect(module:string){
+  redirect(module: string) {
     this.deslogar();
-    window.location.href = this.cadastroUnico+module;
+    window.location.href = this.cadastroUnico + module;
   }
-  
-  getUrlLink(teste:string){
+
+  getUrlLink(teste: string) {
     return this.cadastroUnico.valueOf() + teste;
   }
-  
-  deslogar(): void{
+
+  deslogar(): void {
     this.authenticationService.logout();
   }
 
-  private verificarPermissao(pers: string): boolean{
-    if(pers == null || pers.length <= 0){
+  private verificarPermissao(pers: string): boolean {
+    if (pers == null || pers.length <= 0) {
       return true;
     }
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.currentUser.roles.length; i++) {
-      if(pers.toLowerCase() == this.currentUser.roles[i].toLowerCase()){
+      // tslint:disable-next-line: triple-equals
+      if (pers.toLowerCase() == this.currentUser.roles[i].toLowerCase()) {
         return true;
       }
     }

@@ -4,27 +4,29 @@ import { BaseResourceService } from 'src/app/shared/service/base-resource.servic
 import { BaseResourceModel } from 'src/app/shared/models/base-resource.model';
 import { Injector } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import toastr from "toastr";
+import toastr from 'toastr';
 import { Title } from '@angular/platform-browser';
 import { UserLogado } from 'src/app/pages/security/shared/user-logado.model';
 import { SituacaoEnum } from 'src/app/pages/igreja/shared/enums/situacao.enum';
 
+// tslint:disable
 export abstract class BaseResourceListComponent<T extends BaseResourceModel>{
 
   messageService: MessageService;
-  page: number = 0;
-  count: number = 10;
+  page = 0;
+  count = 10;
   pages: Array<number>;
-  paginas: any = "";
-  title: string = '';
+  paginas: any = '';
+  title = '';
   toast;
   router: Router;
   authenticationService: AuthenticationService;
   protected titleService: Title;
 
+  // tslint:disable-next-line: new-parens
   currentUser: UserLogado = new UserLogado;
 
-  //Permissões
+  // Permissões
   fiscalADMINISTRADOR: boolean = null;
   fiscalFISCALIZACAO: boolean = null;
   expediente: boolean = null;
@@ -40,10 +42,12 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel>{
     this.titleService = injector.get(Title);
   }
 
+  // tslint:disable-next-line: use-life-cycle-interface
   ngOnInit() {
     this.paginas = '';
+    // tslint:disable-next-line: triple-equals
     if (this.titleService.getTitle() == 'Login') {
-      this.titleService.setTitle('Dívida Ativa');
+      this.titleService.setTitle('Igreja');
       location.reload();
     }
     this.findByParams();
@@ -135,17 +139,17 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel>{
   situacoes = {
     ATIVO: 'Ativo',
     INATIVO: 'Inativo'
-};
+  };
 
   get situacaoOptions(): Array<any> {
     return this.getTypes(this.situacoes);
-}
+  }
 
   get tipoReincidenciaAutoInfracaoOptions(): Array<any> {
     return this.getTypes(this.tipoReincidenciaAutoInfracaos);
   }
 
-  getSituacaoEnum(tipo: string): string{
+  getSituacaoEnum(tipo: string): string {
     return SituacaoEnum[tipo];
   }
 

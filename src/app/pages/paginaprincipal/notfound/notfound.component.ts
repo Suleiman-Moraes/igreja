@@ -15,13 +15,14 @@ export class NotfoundComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // tslint:disable-next-line: triple-equals
     if (this.titleService.getTitle() == 'Login') {
-      this.titleService.setTitle("Dívida Ativa");
+      this.titleService.setTitle('Igreja');
       location.reload();
     }
   }
 
-  getUrlLink(teste:string){
+  getUrlLink(teste: string) {
     return this.cadastroUnico.valueOf() + teste;
   }
 }

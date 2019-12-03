@@ -5,23 +5,19 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../shared/user.model';
 import { first } from 'rxjs/operators';
-import toastr from "toastr";
+import toastr from 'toastr';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+// tslint:disable
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   private returnUrl: string;
-  descricaoModal: string = "";
+  descricaoModal = '';
   user: User = new User();
-  //----Popup---//
-  display: boolean = true;
-  titleModal: string = "";
-  tamanhoResponsivel:boolean = true;
-  //----Popup---//
 
   imaskConfig = {
     mask: [
@@ -46,14 +42,11 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private titleService: Title
   ) {
-    this.titleService.setTitle("Login");
+    this.titleService.setTitle('Login');
   }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      login: [null, Validators.required],
-      password: [null, Validators.required]
-    });
+    this.buildResourceForm();
 
     if(this.authenticationService.currentUserValue){
       this.authenticationService.logout();
@@ -83,6 +76,12 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  getModalLarge(){
+    if(this.descricaoModal.length > 200)
+      return true;
+    return false;
+  }
+
   private actionsForError(error) {
     toastr.error(error, {
       "debug": false,
@@ -98,10 +97,11 @@ export class LoginComponent implements OnInit {
       "hideMethod": "fadeOut"
     });
   }
-  
-  getModalLarge(){
-    if(this.descricaoModal.length > 200)
-      return true;
-    return false;
+
+  private buildResourceForm(): void {
+    this.loginForm = this.formBuilder.group({
+      login: [null, [Validators.required, Validators.maxLength(255)]],
+      senha: [null, [Validators.required, Validators.maxLength(255)]]
+    });
   }
 }

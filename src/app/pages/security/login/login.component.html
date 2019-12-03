@@ -1,1 +1,26 @@
-Login
+<form class="was-validated" [formGroup]="loginForm">
+    <div class="form-row">
+        <div class="form-group col-md-3"></div>
+        <div class="form-group col-md-6">
+            <div class="card">
+                <h4 class="card-header"><strong>Login</strong></h4>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="login">Login</label>
+                            <input type="text" class="form-control" id="login" formControlName="login"
+                                placeholder="Login" title="Login" required>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="senha">Senha</label>
+                            <input type="password" class="form-control" id="senha" formControlName="senha"
+                                placeholder="Senha" title="Senha" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-3"></div>
+    </div>
+</form>

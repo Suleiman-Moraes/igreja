@@ -31,26 +31,20 @@ export class AuthenticationService implements OnInit {
     return this.currentUserSubject.value;
   }
 
-  isUsuarioInterno(): boolean {
-    const user: UserLogado = this.currentUserValue;
-    return user != null && user.user.usuarioInterno;
-  }
-
   login(user: User): Observable<UserLogado> {
     return this.http.post<any>(`${IGREJA_API_AUTH}`, user)
-      .pipe(map(user => {
+      .pipe(map(u => {
         // login successful if there's a jwt token in the response
-        if (user && user.token) {
+        if (u && u.token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           this.showTemplate.emit(true);
-          localStorage.setItem('tRcr7Ssn', btoa(JSON.stringify(user)));
-          this.currentUserSubject.next(user);
-        }
-        else {
+          localStorage.setItem('tRcr7Ssn', btoa(JSON.stringify(u)));
+          this.currentUserSubject.next(u);
+        } else {
           this.showTemplate.emit(false);
         }
 
-        return user;
+        return u;
       }));
   }
 
@@ -63,8 +57,7 @@ export class AuthenticationService implements OnInit {
           this.showTemplate.emit(true);
           localStorage.setItem('tRcr7Ssn', btoa(JSON.stringify(user)));
           this.currentUserSubject.next(user);
-        }
-        else {
+        } else {
           this.showTemplate.emit(false);
         }
         return user;

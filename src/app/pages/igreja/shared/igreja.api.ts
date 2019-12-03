@@ -1,8 +1,8 @@
-const IGREJA: string = 'http://localhost:8080';
+const IGREJA = 'http://localhost:8080';
 
-export const FINDBYPARAMSSINGLE: string = '/findbyparamssingle';
-export const FINDBYPARAMSRELATORIO: string = '/findbyparamsrelatorio';
-export const DTO: string = '/dto';
+export const FINDBYPARAMSSINGLE = '/findbyparamssingle';
+export const FINDBYPARAMSRELATORIO = '/findbyparamsrelatorio';
+export const DTO = '/dto';
 
-export const IGREJA_API_AUTH: string = `${IGREJA}/auth`;
-export const IGREJA_API_REFRESH: string = `${IGREJA}/refresh`;
+export const IGREJA_API_AUTH = `${IGREJA}/auth`;
+export const IGREJA_API_REFRESH = `${IGREJA}/refresh`;
