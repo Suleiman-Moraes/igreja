@@ -34,6 +34,7 @@ import { ListboxModule } from 'primeng/listbox';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { MaskMoneyPipe } from './service/mask-money.pipe';
+import { InputPadraoRequiredComponent } from './components/input-padrao-required/input-padrao-required.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { MaskMoneyPipe } from './service/mask-money.pipe';
     InputPadraoComponent,
     ColocaPrimeiroCaptularPipe,
     TextareaPadraoComponent,
-    MaskMoneyPipe
+    MaskMoneyPipe,
+    InputPadraoRequiredComponent
   ],
   imports: [
     CommonModule,
@@ -109,6 +111,7 @@ import { MaskMoneyPipe } from './service/mask-money.pipe';
     ServerErrorMessagesComponent,
     BreadCrumbComponent,
     InputPadraoComponent,
+    InputPadraoRequiredComponent,
     ColocaPrimeiroCaptularPipe,
     TextareaPadraoComponent,
     MaskMoneyPipe
