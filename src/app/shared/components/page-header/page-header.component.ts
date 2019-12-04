@@ -5,6 +5,7 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './page-header.component.html',
   styleUrls: ['./page-header.component.css']
 })
+// tslint:disable
 export class PageHeaderComponent implements OnInit {
 
   @Input('page-title') pageTitle: string;

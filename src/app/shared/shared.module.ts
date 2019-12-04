@@ -7,8 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { CalendarModule } from "primeng/calendar";
-import { IMaskModule } from "angular-imask";
+import { CalendarModule } from 'primeng/calendar';
+import { IMaskModule } from 'angular-imask';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AccordionModule } from 'primeng/accordion';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
@@ -37,7 +37,7 @@ import { MaskMoneyPipe } from './service/mask-money.pipe';
 
 @NgModule({
   declarations: [
-    FormFieldErrorComponent, 
+    FormFieldErrorComponent,
     ServerErrorMessagesComponent,
     PageHeaderComponent,
     BreadCrumbComponent,
@@ -75,7 +75,7 @@ import { MaskMoneyPipe } from './service/mask-money.pipe';
     OverlayPanelModule
   ],
   exports: [
-    //shared modules
+    // shared modules
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
@@ -97,13 +97,13 @@ import { MaskMoneyPipe } from './service/mask-money.pipe';
     DropdownModule,
     EditorModule,
     CKEditorModule,
-    QuillModule,  
+    QuillModule,
     TabViewModule,
     ListboxModule,
     ScrollPanelModule,
     OverlayPanelModule,
 
-    //shared components
+    // shared components
     FormFieldErrorComponent,
     PageHeaderComponent,
     ServerErrorMessagesComponent,

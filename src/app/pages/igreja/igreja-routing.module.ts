@@ -4,7 +4,8 @@ import { AuthGuard } from '../security/auth.guard';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard]}
+  { path: '', component: HomeComponent, canActivate: [AuthGuard]},
+  { path: 'cadastro', loadChildren: './cadastro/cadastro.module#CadastroModule' }
   // { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {roles: [Role.moduloFINANCAS]}}
 ];
 

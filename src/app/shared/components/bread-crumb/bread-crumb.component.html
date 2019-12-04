@@ -1,6 +1,6 @@
 <nav>
   <ol class="breadcrumb" style="background: #efecec">
-    <li class="breadcrumb-item"> <a  [href]="getUrlLink('')" >Home</a> </li>
+    <li class="breadcrumb-item"> <a  href="#/pages" >Home</a> </li>
 
     <li *ngFor="let item of itens" class="breadcrumb-item" [class.active]="isTheLastItem(item)">
       <span *ngIf="isTheLastItem(item)">{{ item.text }}</span>

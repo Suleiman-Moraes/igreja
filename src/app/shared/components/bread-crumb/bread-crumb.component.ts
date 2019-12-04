@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-interface BreadCrumbItem{
+interface BreadCrumbItem {
   text: string;
   link?: string;
 }
@@ -14,19 +14,14 @@ export class BreadCrumbComponent implements OnInit {
 
   @Input() itens: Array<BreadCrumbItem> = [];
 
-  cadastroUnico = '';
-
   constructor() { }
 
   ngOnInit() {
   }
 
-  isTheLastItem(item: BreadCrumbItem): boolean{
+  isTheLastItem(item: BreadCrumbItem): boolean {
     const index = this.itens.indexOf(item);
+    // tslint:disable-next-line: triple-equals
     return index + 1 == this.itens.length;
-  }
-
-  getUrlLink(teste:string){
-    return this.cadastroUnico.valueOf() + teste;
   }
 }
