@@ -10,3 +10,6 @@ export const IGREJA_API = `${IGREJA}/api`;
 
 //Membro
 export const IGREJA_API_MEMBRO: string = `${IGREJA_API}/membro`;
+
+//Endereco
+export const IGREJA_API_ENDERECO: string = `${IGREJA_API}/endereco`;

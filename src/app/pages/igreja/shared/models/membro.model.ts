@@ -1,4 +1,5 @@
 import { BaseResourceModel } from 'src/app/shared/models/base-resource.model';
+import { Endereco } from './endereco.model';
 
 export class Membro extends BaseResourceModel{
     constructor(
@@ -11,10 +12,16 @@ export class Membro extends BaseResourceModel{
         public tipo?: string,
         public dataNascimento?: Date,
         public dataInclusao?: Date,
-        public endereco?: any
+        public endereco?: Endereco
     ){
         super();
     }
+
+    static tipoMembroEnums = {
+        MEMBRO: 'Membro',
+        TESOUREIRO: 'Tesoureir(a)',
+        PASTOR_DIRIGENTE: 'Pastor(a) Dirigente'
+    };
 
     static fromJson(jsonData: any): Membro{
         return Object.assign(new Membro(), jsonData);

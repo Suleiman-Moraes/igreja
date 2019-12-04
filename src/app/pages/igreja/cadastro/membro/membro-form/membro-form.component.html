@@ -2,17 +2,114 @@
 <app-page-header [page-title]="pageTitle" button-text=" Voltar" [button-link]="urlList"
   icon-lass="pi pi-angle-double-left" button-class="text-center"></app-page-header>
 
-<form class="was-validated" [formGroup]="resourceForm" (submit)="submitForm()">
+<form [formGroup]="resourceForm" (submit)="submitForm()">
   <div class="card">
+    <div class="card-header">
+      <strong>Dados pessoais</strong>
+    </div>
     <div class="card-body">
       <div class="form-row">
         <div class="form-group col-md-6">
-          <app-input-padrao-required for-name="nome" nome="Nome" [resource-form]="resourceForm"></app-input-padrao-required>
+          <app-input-padrao-required for-name="nome" nome="Nome" [resource-form]="resourceForm">
+          </app-input-padrao-required>
         </div>
         <div class="form-group col-md-6">
-          <app-input-padrao-required for-name="email" nome="E-mail" [resource-form]="resourceForm"></app-input-padrao-required>
+          <app-input-padrao for-name="email" nome="E-mail" [resource-form]="resourceForm"></app-input-padrao>
+        </div>
+        <div class="form-group col-md-3">
+          <label class="titleLabel" for="cpf">CPF</label>
+          <input placeholder="CPF" title="CPF" type="text" class="form-control" id="cpf" formControlName="cpf"
+            [imask]="{mask: '000.000.000-00'}">
+          <app-form-field-error [form-control]="resourceForm.get('cpf')"></app-form-field-error>
+        </div>
+        <div class="form-group col-md-3">
+          <label class="titleLabel" for="cpf">Telefone</label>
+          <input placeholder="Telefone" title="CPF" type="text" class="form-control" id="telefone"
+            formControlName="telefone" [imask]="{mask: '(00)00000-0000'}">
+          <app-form-field-error [form-control]="resourceForm.get('telefone')"></app-form-field-error>
+        </div>
+        <div class="form-group col-md-2">
+          <label class="titleLabel" for="sexo">Sexo</label>
+          <p-toggleButton formControlName="sexo" [style]="{'width':'100%'}" onIcon="fa fa-mars" offIcon="fa fa-venus"
+            onLabel="Masculino" offLabel="Feminino"></p-toggleButton>
+          <app-form-field-error [form-control]="resourceForm.get('sexo')"></app-form-field-error>
+        </div>
+        <div class="form-group col-md-4">
+          <label class="titleLabel" for="situacao">Situação</label>
+          <select formControlName="situacao" id="situacao" class="form-control" title="Situação">
+            <!-- <option [value]="null" disabled>Selecione uma Situação</option> -->
+            <option *ngFor="let option of situacaoOptions" [value]="option.value">{{ option.text }}</option>
+          </select>
+          <app-form-field-error [form-control]="resourceForm.get('situacao')"></app-form-field-error>
+        </div>
+        <div class="form-group col-md-4">
+          <label class="titleLabel" for="tipo">Tipo do membro</label>
+          <select formControlName="tipo" id="tipo" class="form-control" title="Tipo do membro" required>
+            <option [value]="null" disabled>Selecione um Tipo do membro</option>
+            <option *ngFor="let option of tipoMembroEnumOptions" [value]="option.value">{{ option.text }}</option>
+          </select>
+          <app-form-field-error [form-control]="resourceForm.get('tipo')"></app-form-field-error>
+        </div>
+        <div class="form-group col-md-2">
+          <label class="titleLabel" for="tipo">Data de nascimento</label>
+          <p-calendar id="dataNascimento" formControlName="dataNascimento" inputStyleClass="form-control"
+            [style]="{'width':'100%'}" dateFormat="dd/mm/yy" [locale]="ptBR" [showButtonBar]="true"
+            title="Data de nascimento" [maxDate]="maxDate" placeholder="Data de nascimento"
+            onkeypress="return data(event);">
+          </p-calendar>
+          <app-form-field-error [form-control]="resourceForm.get('dataNascimento')"></app-form-field-error>
         </div>
       </div>
     </div>
   </div>
+  <div class="card">
+    <div class="card-header">
+      <strong>Endereço</strong>
+    </div>
+    <form [formGroup]="enderecoForm">
+      <div class="card-body">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label class="titleLabel" for="cep">CEP</label>
+            <input placeholder="CEP" title="CEP" type="text" class="form-control" id="cep" formControlName="cep"
+              [imask]="{mask: '00000-000'}" (blur)="buscarEndereco()">
+            <app-form-field-error [form-control]="enderecoForm.get('cep')"></app-form-field-error>
+          </div>
+          <div class="form-group col-md-6">
+            <app-input-padrao for-name="rua" nome="Rua" [resource-form]="enderecoForm"></app-input-padrao>
+          </div>
+          <div class="form-group col-md-6">
+            <app-input-padrao for-name="quadra" nome="Quadra" [resource-form]="enderecoForm"></app-input-padrao>
+          </div>
+          <div class="form-group col-md-6">
+            <app-input-padrao for-name="lote" nome="Lote" [resource-form]="enderecoForm"></app-input-padrao>
+          </div>
+          <div class="form-group col-md-6">
+            <app-input-padrao for-name="numero" nome="Número" [resource-form]="enderecoForm"></app-input-padrao>
+          </div>
+          <div class="form-group col-md-6">
+            <app-input-padrao for-name="setor" nome="Setor" [resource-form]="enderecoForm"></app-input-padrao>
+          </div>
+          <div class="form-group col-md-6">
+            <app-input-padrao for-name="cidade" nome="Cidade" [resource-form]="enderecoForm"></app-input-padrao>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="titleLabel" for="uf">UF</label>
+            <input placeholder="UF" title="UF" type="text" class="form-control" id="uf" formControlName="uf"
+              [imask]="{mask: 'aa'}" style="text-transform: uppercase">
+            <app-form-field-error [form-control]="enderecoForm.get('uf')"></app-form-field-error>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <button type="submit" class="btn btn-secondary float-right mt-3" title="Salvar">
+    <i class="pi pi-save"></i>
+    Salvar
+  </button>
+  <button type="button" class="btn btn-danger mt-3" [routerLink]="[urlList]" title="Cancelar">
+    <i class="pi pi-times"></i>
+    Cancelar
+  </button>
 </form>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
