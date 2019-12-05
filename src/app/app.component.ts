@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'dividaativa';
+  title = 'igreja';
   public showTemplate: boolean = true;
   public static myPag: string = "Home";
   userActivity;

@@ -1,15 +1,15 @@
 export enum UrlPermissaoEnum {
-    novaSenhaExterno = '/dividaativa/novasenhaexterno',
-    empresaDados = '/dividaativa/empresa/dados',
-    empresaNew = '/dividaativa/empresa/new',
-    empresa = '/dividaativa/empresa',
-    cadastrounicoEmpresaValidardocumentacao = '/dividaativa/empresa/validardocumentacao',
+    novaSenhaExterno = '/igreja/novasenhaexterno',
+    empresaDados = '/igreja/empresa/dados',
+    empresaNew = '/igreja/empresa/new',
+    empresa = '/igreja/empresa',
+    cadastrounicoEmpresaValidardocumentacao = '/igreja/empresa/validardocumentacao',
     notFound = '/404',
-    cadastrounicoUsuario = '/dividaativa/usuario',
-    cadastrounicoUsuarioRootEdit = '/dividaativa/usuario/1/edit',
-    cadastrounicoUsuarioPerfil = '/dividaativa/usuario/perfil',
-    cadastrounicoUsuarioPermissao = '/dividaativa/usuario/permissao',
-    cadastrounicoVeiculo = '/dividaativa/veiculo',
-    cadastrounicoVeiculoExterno = '/dividaativa/veiculo/externo',
-    cadastrounicoVeiculoNew = '/dividaativa/veiculo/new'
+    cadastrounicoUsuario = '/igreja/usuario',
+    cadastrounicoUsuarioRootEdit = '/igreja/usuario/1/edit',
+    cadastrounicoUsuarioPerfil = '/igreja/usuario/perfil',
+    cadastrounicoUsuarioPermissao = '/igreja/usuario/permissao',
+    cadastrounicoVeiculo = '/igreja/veiculo',
+    cadastrounicoVeiculoExterno = '/igreja/veiculo/externo',
+    cadastrounicoVeiculoNew = '/igreja/veiculo/new'
 }

@@ -15,7 +15,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     pageTitle: string;
     resource: T;
     resourceForm: FormGroup;
-    urlList: string = '/dividaativa';
+    urlList: string = '/igreja';
     maxDate: Date = new Date();
     minDate: Date = new Date();
     tipos: string[] = ['pdf', 'doc', 'docx', 'png', 'PNG', 'jpg', 'xls'];

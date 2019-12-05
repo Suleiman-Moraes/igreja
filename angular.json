@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "dividaativa": {
+    "igreja": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -35,7 +35,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/dividaativa",
+            "outputPath": "dist/igreja",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -100,19 +100,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "dividaativa:build",
+            "browserTarget": "igreja:build",
             "port": 4205
           },
           "configurations": {
             "production": {
-              "browserTarget": "dividaativa:build:production"
+              "browserTarget": "igreja:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "dividaativa:build"
+            "browserTarget": "igreja:build"
           }
         },
         "test": {
@@ -146,7 +146,7 @@
         }
       }
     },
-    "dividaativa-e2e": {
+    "igreja-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -155,11 +155,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "dividaativa:serve"
+            "devServerTarget": "igreja:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "dividaativa:serve:production"
+              "devServerTarget": "igreja:serve:production"
             }
           }
         },
@@ -175,5 +175,5 @@
       }
     }
   },
-  "defaultProject": "dividaativa"
+  "defaultProject": "igreja"
 }
