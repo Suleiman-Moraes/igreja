@@ -115,6 +115,9 @@ export class MenuComponent implements OnInit {
       return true;
     }
     // tslint:disable-next-line: prefer-for-of
+    if(!this.currentUser || !this.currentUser.roles){
+      return false;
+    }
     for (let i = 0; i < this.currentUser.roles.length; i++) {
       // tslint:disable-next-line: triple-equals
       if (pers.toLowerCase() == this.currentUser.roles[i].toLowerCase()) {

@@ -1,6 +1,6 @@
 export enum Role {
-    moduloREGULAR = 'moduloREGULAR',
-    acessarAuditoria = 'acessarAuditoria',
+    membro = 'MEMBRO',
+    pastor = 'ROLE_PASTOR',
     moduloFINANCAS = 'moduloFINANCAS',
     moduloTRAMITE = 'moduloTRAMITE',
     manterPARAMETROS = 'manterPARAMETROS',
