@@ -10,7 +10,7 @@ import { AuthenticationService } from '../../security/shared/authentication-serv
 export class HeaderComponent implements OnInit {
 
   private currentUserName: string = null;
-  private currentUser: UserLogado = null;
+  public currentUser: UserLogado = null;
   userLogin = '';
   home = '#/pages';
 
