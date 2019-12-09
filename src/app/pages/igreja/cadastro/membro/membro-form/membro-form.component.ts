@@ -73,6 +73,10 @@ export class MembroFormComponent extends BaseResourceFormComponent<Membro>{
     });
   }
 
+  protected beforeSubmitForm(): void {
+    this.resourceForm.get('dataNascimento').setValue(new Date((this.resourceForm.value.dataNascimento + '').toString()));
+  }
+
   protected posSubmitFormSucesso(): void {
     if (this.currentAction == 'new') {
       this.toast.success('Membro criado com sucesso!');

@@ -1,5 +1,6 @@
 const IGREJA = 'http://localhost:8080';
 // const IGREJA = 'http://187.6.249.66:8080/igrejaservice';
+// const IGREJA = 'https://igreja-service.herokuapp.com';
 
 export const FINDBYPARAMSSINGLE = '/findbyparamssingle';
 export const FINDBYPARAMSRELATORIO = '/findbyparamsrelatorio';
