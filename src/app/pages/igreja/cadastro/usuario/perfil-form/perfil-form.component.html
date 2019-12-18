@@ -1,0 +1,35 @@
+<app-bread-crumb [itens]="[{text: pageTitle}]"></app-bread-crumb>
+<app-page-header [page-title]="pageTitle" [show-button]="false"></app-page-header>
+
+<form [formGroup]="resourceForm" (submit)="submitForm()">
+  <div class="card">
+    <div class="card-header">
+      <strong>Dados</strong>
+    </div>
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <app-input-padrao-required for-name="login" nome="Login" [resource-form]="resourceForm">
+          </app-input-padrao-required>
+        </div>
+        <div class="form-group col-md-6">
+          <app-input-padrao for-name="nome" nome="Nome" [resource-form]="resourceForm"></app-input-padrao>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="titleLabel" for="senha">Senha</label>
+          <input placeholder="Senha" title="Senha" type="password" class="form-control" id="senha" formControlName="senha">
+          <app-form-field-error [form-control]="resourceForm.get('senha')"></app-form-field-error>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-secondary float-right mt-3" [disabled]="resourceForm.invalid" title="Salvar">
+    <i class="pi pi-save"></i>
+    Salvar
+  </button>
+  <button type="button" class="btn btn-danger mt-3" [routerLink]="[urlList]" title="Cancelar">
+    <i class="pi pi-times"></i>
+    Cancelar
+  </button>
+</form>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
