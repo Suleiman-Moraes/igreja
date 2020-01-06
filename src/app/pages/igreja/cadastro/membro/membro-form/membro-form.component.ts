@@ -1,3 +1,4 @@
+import { Usuario } from './../../../shared/models/usuario.model';
 import { SituacaoEnum } from 'src/app/pages/igreja/shared/enums/situacao.enum';
 import { Membro } from './../../../shared/models/membro.model';
 import { Component, Injector } from '@angular/core';
@@ -16,6 +17,7 @@ import { switchMap } from 'rxjs/operators';
 export class MembroFormComponent extends BaseResourceFormComponent<Membro>{
 
   enderecoForm: FormGroup;
+  user: Usuario = null;
 
   constructor(
     protected injector: Injector,
@@ -73,6 +75,18 @@ export class MembroFormComponent extends BaseResourceFormComponent<Membro>{
     });
   }
 
+  protected setCurrentAction() {
+    if (this.route.snapshot.url[0].path == "new") {
+      this.currentAction = "new";
+    }
+    else if (this.route.snapshot.url[0].path == "meu") {
+      this.currentAction = "meu";
+    }
+    else {
+      this.currentAction = "edit";
+    }
+  }
+
   protected beforeSubmitForm(): void {
     this.resourceForm.get('dataNascimento').setValue(new Date((this.resourceForm.value.dataNascimento + '').toString()));
   }
@@ -80,36 +94,51 @@ export class MembroFormComponent extends BaseResourceFormComponent<Membro>{
   protected posSubmitFormSucesso(): void {
     if (this.currentAction == 'new') {
       this.toast.success('Membro criado com sucesso!');
+      this.router.navigate([this.urlList]);
+    }
+    else if (this.currentAction == 'meu') {
+      this.toast.success('Cadastro atualizado com sucesso!');
+      this.router.navigate(['/pages/cadastro/membro/meu']);
     }
     else {
       this.toast.success('Membro atualizado com sucesso!');
+      this.router.navigate([this.urlList]);
     }
-
-    this.router.navigate([this.urlList]);
   }
 
   protected posNgOnInit(): void {
     this.urlList = '/pages/cadastro/membro';
+    this.user = this.user ? this.user : this.authenticationService.currentUserValue.user;
   }
 
-  protected createPageTitle(): string {
-    return 'Novo Membro';
-  }
-
-  protected editionPageTitle(): string {
-    return 'Edição de Membro';
+  protected setPageTitle() {
+    if (this.currentAction == 'new') {
+      this.pageTitle = 'Novo Membro';
+    }
+    else if (this.currentAction == 'meu') {
+      this.pageTitle = 'Meu Cadastro';
+    }
+    else {
+      this.pageTitle = 'Edição de Membro';
+    }
   }
 
   protected loadResource(): void {
-    if (this.currentAction == 'edit') {
+    if (this.currentAction != 'new') {
       let id: string = '';
-      this.route.paramMap.pipe(
-        switchMap(params => params.get('id'))
-      ).subscribe(
-        (param) => {
-          id += param;
-        }
-      );
+      if (this.currentAction == 'edit') {
+        this.route.paramMap.pipe(
+          switchMap(params => params.get('id'))
+        ).subscribe(
+          (param) => {
+            id += param;
+          }
+        );
+      }
+      else { //meu
+        this.user = this.authenticationService.currentUserValue.user;
+        id = this.user.membro.id + '';
+      }
       this.resourceService.getById(Number(id)).subscribe(
         (responseApi: ResponseApi) => {
           if (responseApi.data == null) {

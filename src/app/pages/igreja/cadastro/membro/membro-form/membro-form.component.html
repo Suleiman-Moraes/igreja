@@ -1,6 +1,7 @@
-<app-bread-crumb [itens]="[{text: 'Membros', link: urlList}, {text: pageTitle}]"></app-bread-crumb>
+<app-bread-crumb [itens]="[{text: 'Membros', link: urlList}, {text: pageTitle}]" *ngIf="currentAction != 'meu'"></app-bread-crumb>
+<app-bread-crumb [itens]="[{text: pageTitle}]" *ngIf="currentAction == 'meu'"></app-bread-crumb>
 <app-page-header [page-title]="pageTitle" button-text=" Voltar" [button-link]="urlList"
-  icon-lass="pi pi-angle-double-left" button-class="text-center"></app-page-header>
+  icon-lass="pi pi-angle-double-left" button-class="text-center" [show-button]="currentAction && currentAction != 'meu'"></app-page-header>
 
 <form [formGroup]="resourceForm" (submit)="submitForm()">
   <div class="card">
@@ -107,7 +108,7 @@
     <i class="pi pi-save"></i>
     Salvar
   </button>
-  <button type="button" class="btn btn-danger mt-3" [routerLink]="[urlList]" title="Cancelar">
+  <button type="button" class="btn btn-danger mt-3" [routerLink]="[urlList]" title="Cancelar" *ngIf="currentAction != 'meu'">
     <i class="pi pi-times"></i>
     Cancelar
   </button>

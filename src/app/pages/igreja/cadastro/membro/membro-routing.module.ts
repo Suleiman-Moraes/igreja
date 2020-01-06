@@ -8,7 +8,8 @@ import { Role } from 'src/app/pages/security/shared/role.enum';
 const routes: Routes = [
   { path: '', component: MembroListComponent, canActivate: [AuthGuard], data: {roles: [Role.pastor]}},
   { path: ':id/edit', component: MembroFormComponent, canActivate: [AuthGuard], data: {roles: [Role.pastor]}},
-  { path: 'new', component: MembroFormComponent, canActivate: [AuthGuard], data: {roles: [Role.pastor]}}
+  { path: 'new', component: MembroFormComponent, canActivate: [AuthGuard], data: {roles: [Role.pastor]}},
+  { path: 'meu', component: MembroFormComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
